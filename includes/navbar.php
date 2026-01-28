@@ -14,7 +14,7 @@ $link_en = '?' . http_build_query($params);
 
             <div class="flex-shrink-0 flex items-center">
                 <a href="index.php">
-                    <img class="h-10 w-auto" src="assets/img/logo-ghania.png" alt="Ghania Creative">
+                    <img class="h-14 w-auto" src="assets/img/logo-ghania.png" alt="Ghania Creative">
                 </a>
             </div>
 

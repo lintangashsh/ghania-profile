@@ -99,17 +99,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <link href="../../assets/css/style.css" rel="stylesheet">
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/tinymce/6.8.2/tinymce.min.js" referrerpolicy="origin"></script>
-    <!-- <script>
-    tinymce.init({
-        selector: '.tinymce-editor',
-        height: 500,
-        menubar: false,
-        plugins: 'link image lists code table wordcount',
-        toolbar: 'undo redo | blocks | bold italic | alignleft aligncenter alignright | bullist numlist | removeformat',
-        content_style: "@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap'); body { font-family: 'Poppins', sans-serif; font-size: 14px; color: #333; }",
-        paste_as_text: true
-    });
-    </script> -->
     <script>
     tinymce.init({
         selector: '.tinymce-editor',

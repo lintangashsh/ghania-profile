@@ -1,25 +1,3 @@
-<!-- <header class="bg-white shadow-sm h-16 flex items-center justify-between px-6 sticky top-0 z-10">
-    <button class="md:hidden text-gray-600">
-        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
-        </svg>
-    </button>
-
-    <h2 class="text-xl font-bold text-gray-800 hidden md:block">
-        Admin Dashboard
-    </h2>
-
-    <div class="flex items-center space-x-3">
-        <div class="text-right hidden sm:block">
-            <div class="text-sm font-bold text-gray-700"><?= $_SESSION['admin_name'] ?></div>
-            <div class="text-xs text-gray-500">Super Admin</div>
-        </div>
-        <div
-            class="h-10 w-10 rounded-full bg-ghania-orange flex items-center justify-center text-white font-bold text-lg">
-            <?= substr($_SESSION['admin_name'], 0, 1) ?>
-        </div>
-    </div>
-</header> -->
 <!DOCTYPE html>
 <html lang="<?= $lang_code ?? 'id' ?>">
 

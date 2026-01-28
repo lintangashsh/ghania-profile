@@ -92,14 +92,14 @@
 </footer>
 
 <script>
-    const btnMobile = document.getElementById('mobile-menu-btn');
-    const menuMobile = document.getElementById('mobile-menu');
+const btnMobile = document.getElementById('mobile-menu-btn');
+const menuMobile = document.getElementById('mobile-menu');
 
-    if (btnMobile && menuMobile) {
-        btnMobile.addEventListener('click', () => {
-            menuMobile.classList.toggle('hidden');
-        });
-    }
+if (btnMobile && menuMobile) {
+    btnMobile.addEventListener('click', () => {
+        menuMobile.classList.toggle('hidden');
+    });
+}
 </script>
 
 </body>
