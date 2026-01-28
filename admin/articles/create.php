@@ -77,7 +77,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/tinymce/6.8.2/tinymce.min.js" referrerpolicy="origin"></script>
 
-    <script>
+    <!-- <script>
     tinymce.init({
         selector: '.tinymce-editor',
         height: 500,
@@ -86,6 +86,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         toolbar: 'undo redo | blocks | bold italic backcolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | removeformat | help',
 
         content_style: "@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap'); body { font-family: 'Poppins', sans-serif; font-size: 14px; color: #333; line-height: 1.6; } p { margin-bottom: 15px; }",
+        paste_as_text: true
+    });
+    </script> -->
+    <script>
+    tinymce.init({
+        selector: '.tinymce-editor',
+        height: 500,
+        menubar: false,
+        plugins: 'advlist autolink lists link image charmap preview anchor searchreplace visualblocks code fullscreen insertdatetime media table code help wordcount',
+        toolbar: 'undo redo | blocks | bold italic underline | alignleft aligncenter alignright alignjustify | bullist numlist | outdent indent | removeformat | help',
+        content_style: "@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap'); body { font-family: 'Poppins', sans-serif; font-size: 14px; color: #333; line-height: 1.6; } ul { list-style-type: disc; padding-left: 20px; } ol { list-style-type: decimal; padding-left: 20px; }",
         paste_as_text: true
     });
     </script>
