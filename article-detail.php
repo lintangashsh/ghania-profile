@@ -106,20 +106,61 @@ article * {
     font-family: 'Poppins', sans-serif !important;
 }
 
-article h2 {
-    font-size: 1.8em;
+article h1,
+article h2,
+article h3,
+article h4 {
+    color: #111;
     font-weight: 700;
     margin-top: 1.5em;
-    color: #111;
+    margin-bottom: 0.5em;
 }
 
 article p {
     margin-bottom: 1.5em;
     line-height: 1.8;
+    color: #374151;
 }
 
 article ul {
-    list-style: disc;
-    padding-left: 1.5em;
+    display: block;
+    list-style-type: disc !important;
+    padding-left: 2em !important;
+    margin-bottom: 1.5em;
+}
+
+article ol {
+    display: block;
+    list-style-type: decimal !important;
+    padding-left: 2em !important;
+    margin-bottom: 1.5em;
+}
+
+article li {
+    display: list-item;
+    margin-bottom: 0.5em;
+    padding-left: 0.5em;
+}
+
+article img {
+    border-radius: 0.75rem;
+    margin: 2em 0;
+    width: 100%;
+    height: auto;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+article blockquote {
+    border-left: 4px solid #F05A28;
+    background: #FFF7F0;
+    padding: 1em 1.5em;
+    font-style: italic;
+    color: #555;
+    margin-bottom: 1.5em;
+}
+
+article a {
+    color: #F05A28;
+    text-decoration: underline;
 }
 </style>
