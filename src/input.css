@@ -1,0 +1,7 @@
+@import "tailwindcss";
+
+@theme {
+    --color-ghania-orange: #F05A28;
+    --color-ghania-dark: #2D2D2D;
+    --font-sans: "Poppins", sans-serif;
+}
