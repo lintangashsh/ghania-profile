@@ -6,6 +6,7 @@ include 'includes/header.php';
 include 'includes/navbar.php';
 ?>
 
+<!-- section awal/carousel -->
 <section class="relative bg-gray-900 text-white py-32 lg:py-48 overflow-hidden">
     <div class="absolute inset-0 z-0">
         <img src="assets/img/hero-bg.png" alt="Background" class="w-full h-full object-cover opacity-30">
@@ -32,6 +33,7 @@ include 'includes/navbar.php';
     </div>
 </section>
 
+<!-- section about us -->
 <section class="py-20 bg-white">
     <div class="container mx-auto px-4">
         <div class="text-center mb-12">
@@ -49,6 +51,7 @@ include 'includes/navbar.php';
     </div>
 </section>
 
+<!-- section our services -->
 <section id="services" class="py-20 bg-gray-50">
     <div class="container mx-auto px-4 text-center">
         <h2 class="text-3xl md:text-4xl font-bold mb-4 text-ghania-dark"><?= $t['nav_services'] ?></h2>
@@ -136,6 +139,7 @@ include 'includes/navbar.php';
     </div>
 </section>
 
+<!-- section artikel -->
 <section class="py-20 bg-gray-50 relative">
     <div class="container mx-auto px-4">
         <div class="flex justify-between items-end mb-12">
