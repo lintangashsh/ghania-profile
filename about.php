@@ -10,7 +10,7 @@ include 'includes/navbar.php';
 $sections = [
     [
         'id' => 'identity',
-        'img' => 'https://images.unsplash.com/photo-1497366216548-37526070297c?q=80&w=1920&auto=format&fit=crop',
+        'img' => 'assets/img/about/scene_1.PNG',
         'title_id' => 'Perjalanan Menuju Cakrawala Digital Dunia',
         'title_en' => 'Navigating the Global Digital Frontier',
         'content_id' => 'PT Ghania Creative Indonesia adalah manifestasi dari sebuah cita-cita besar yang lahir di jantung Kota Medan. Berdiri tegak sejak tahun 2021, kami bukan sekadar entitas bisnis; kami adalah katalisator transformasi bagi para pelaku usaha. Berlokasi strategis di Medan, kami hadir sebagai mitra strategis dalam layanan website, mobile apps, hingga transisi cloud server.',
@@ -18,7 +18,7 @@ $sections = [
     ],
     [
         'id' => 'origin',
-        'img' => 'https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?q=80&w=1920&auto=format&fit=crop',
+        'img' => 'assets/img/about/scene_2.PNG',
         'title_id' => 'Menjawab Keresahan di Tengah Badai',
         'title_en' => 'A Response to Socio-Economic Unrest',
         'content_id' => 'Sejarah kami bermula dari diskusi kritis di tengah kelumpuhan pandemi COVID-19 tahun 2021. Kami melihat anomali: UMKM Medan punya semangat juang tinggi namun terhambat literasi digital. Keresahan inilah yang memicu lahirnya Ghania Creative Indonesia. Kami memutuskan bahwa di saat dunia berjarak fisik, teknologi harus menjadi jembatan.',
@@ -26,7 +26,7 @@ $sections = [
     ],
     [
         'id' => 'expansion',
-        'img' => 'https://images.unsplash.com/photo-1526778548025-fa2f459cd5c1?q=80&w=1920&auto=format&fit=crop',
+        'img' => 'assets/img/about/scene_3.PNG',
         'title_id' => 'Melintasi Batas Geografis',
         'title_en' => 'Transcending Geographical Boundaries',
         'content_id' => 'Kepercayaan masyarakat Medan menjadi bahan bakar kami. Dari Medan, kami merambah ke Banda Aceh, Pekanbaru, Padang, Palembang, hingga Pangkal Pinang. Kami sadar keresahan digital adalah isu nasional. Kami pun mulai dipercaya oleh sektor pendidikan, memastikan infrastruktur digital mereka kokoh adalah tanggung jawab moral kami.',
@@ -34,7 +34,7 @@ $sections = [
     ],
     [
         'id' => 'national',
-        'img' => 'https://images.unsplash.com/photo-1596401057633-565652b8ddbe?q=80&w=1920&auto=format&fit=crop',
+        'img' => 'assets/img/about/scene_4.PNG',
         'title_id' => 'Jejak Langkah di Jawa & Dewata',
         'title_en' => 'The Journey through Java & Bali',
         'content_id' => 'Tahun 2023, kami ekspansi ke Pulau Jawa. Klien pertama kami adalah mahasiswa visioner di Malang. Keberhasilan ini menjadi batu loncatan hingga ke Pulau Bali. Ini membuktikan dedikasi kami pada kualitas dapat diterima berbagai lapisan, dari mahasiswa hingga pengusaha mapan.',
@@ -42,6 +42,7 @@ $sections = [
     ],
     [
         'id' => 'global',
+        // MASIH ONLINE (Belum ada scene_5.PNG) - Nanti ganti kalau sudah ada
         'img' => 'https://images.unsplash.com/photo-1559592413-7cec4d0cae2b?q=80&w=1920&auto=format&fit=crop',
         'title_id' => 'Melompat ke Kancah Internasional',
         'title_en' => 'The Global Horizon',
@@ -50,6 +51,7 @@ $sections = [
     ],
     [
         'id' => 'future',
+        // MASIH ONLINE (Belum ada scene_6.PNG)
         'img' => 'https://images.unsplash.com/photo-1620712943543-bcc4688e7485?q=80&w=1920&auto=format&fit=crop',
         'title_id' => 'Masa Depan: Harmonisasi AI',
         'title_en' => 'The Future: Harmonising AI',
@@ -128,7 +130,9 @@ body::-webkit-scrollbar {
     <div id="bg-<?= $section['id'] ?>"
         class="absolute inset-0 w-full h-full transition-opacity duration-1000 ease-in-out <?= $index === 0 ? 'opacity-50' : 'opacity-0' ?>">
         <img src="<?= $section['img'] ?>" class="w-full h-full object-cover">
-        <div class="absolute inset-0 bg-gradient-to-r from-black/95 via-black/70 to-black/30"></div>
+        <!-- <div class="absolute inset-0 bg-gradient-to-r from-black/95 via-black/70 to-black/30"></div> -->
+        <!-- <div class="absolute inset-0 bg-gradient-to-r from-black/80 via-black/50 to-black/20"></div> -->
+        <div class="absolute inset-0 bg-gradient-to-r from-black/70 via-black/40 to-transparent"></div>
     </div>
     <?php endforeach; ?>
 
