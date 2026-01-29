@@ -1,6 +1,16 @@
 <?php
 session_start();
-// 1. Cek Login
+$timeout_duration = 1800;
+
+if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) > $timeout_duration) {
+    session_unset();
+    session_destroy();
+    header("Location: /admin/login.php?timeout=1");
+    exit();
+}
+// Update waktu aktivitas terakhir
+$_SESSION['last_activity'] = time();
+// Cek Login
 if (!isset($_SESSION['admin_logged_in'])) {
     header("Location: login.php");
     exit();
@@ -8,7 +18,6 @@ if (!isset($_SESSION['admin_logged_in'])) {
 
 require '../config/database.php';
 
-// 2. QUERY HITUNG TOTAL DATA (REAL TIME)
 // Hitung Artikel
 $sql_art = "SELECT COUNT(*) as total FROM articles";
 $res_art = $conn->query($sql_art);
