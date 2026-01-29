@@ -20,8 +20,11 @@ include 'includes/navbar.php';
                     “Simplified Your <br> Business Problems”
                 </h1>
                 <p class="text-xl md:text-2xl text-gray-300 font-light mb-8">
-                    Ghania Creative Indonesia Sejak 2021 <br>
-                    <span class="text-sm opacity-80">Business Management</span>
+                    Ghania Creative Indonesia
+                    <?= $t['txt_sejak'] ?> 2021 <br>
+                    <span class="text-sm opacity-80">
+                        <?= $t['txt_business'] ?>
+                    </span>
                 </p>
 
                 <a href="https://wa.me/6285158023383"
@@ -42,8 +45,7 @@ include 'includes/navbar.php';
         </div>
         <div class="text-center">
             <p class="max-w-2xl mx-auto text-gray-600 mb-8">
-                Adalah sebuah perusahaan Digital Creative Agency yang memiliki layanan utama dalam Mobile Apps
-                Development & Website Development.
+                <?= $t['txt_about'] ?>
             </p>
             <a href="about.php" class="text-ghania-orange font-semibold hover:underline"><?= $t['btn_read_more'] ?>
                 &rarr;</a>
@@ -61,7 +63,18 @@ include 'includes/navbar.php';
 
         <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
             <?php
-            // memastikan kolom DB sesuai dengan bahasa (ID or EN)
+            // Icon Monitor (Website)
+            $icon_web = '<svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>';
+
+            // Icon Smartphone (Mobile Apps)
+            $icon_app = '<svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z"></path></svg>';
+
+            // Icon Megaphone/Speaker (Social Media)
+            $icon_socmed = '<svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5.882V19.24a1.76 1.76 0 01-3.417.592l-2.147-6.15M18 13a3 3 0 100-6M5.436 13.683A4.001 4.001 0 017 6h1.832c4.1 0 7.625-1.234 9.168-3v14c-1.543-1.766-5.067-3-9.168-3H7a3.988 3.988 0 01-1.564-.317z"></path></svg>';
+
+            // Icon Default
+            $icon_default = '<svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>';
+
             $sql = "SELECT * FROM services";
             $result = $conn->query($sql);
 
@@ -69,17 +82,26 @@ include 'includes/navbar.php';
                 while ($row = $result->fetch_assoc()):
                     $title = ($lang_code == 'id') ? $row['title_id'] : $row['title_en'];
                     $brief = ($lang_code == 'id') ? $row['brief_id'] : $row['brief_en'];
+
+                    // logic select svg icon
+                    $check_title = strtolower($row['title_en']);
+
+                    if (strpos($check_title, 'website') !== false || strpos($check_title, 'web') !== false) {
+                        $current_icon = $icon_web;
+                    } elseif (strpos($check_title, 'mobile') !== false || strpos($check_title, 'app') !== false) {
+                        $current_icon = $icon_app;
+                    } elseif (strpos($check_title, 'social') !== false || strpos($check_title, 'sosial') !== false) {
+                        $current_icon = $icon_socmed;
+                    } else {
+                        $current_icon = $icon_default;
+                    }
             ?>
 
             <div
-                class="bg-white p-8 rounded-xl shadow-lg hover:shadow-2xl transition duration-300 border-t-4 border-ghania-orange group flex flex-col h-full">
+                class="bg-white p-8 rounded-xl shadow-lg hover:shadow-2xl transition duration-300 border-t-4 border-ghania-orange group flex flex-col h-full transform hover:-translate-y-2">
                 <div
-                    class="w-16 h-16 bg-orange-50 rounded-full flex items-center justify-center mx-auto mb-6 text-ghania-orange group-hover:bg-ghania-orange group-hover:text-white transition">
-                    <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M19.428 15.428a2 2 0 00-1.022-.547l-2.384-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z">
-                        </path>
-                    </svg>
+                    class="w-16 h-16 bg-orange-50 rounded-full flex items-center justify-center mx-auto mb-6 text-ghania-orange group-hover:bg-ghania-orange group-hover:text-white transition duration-300">
+                    <?= $current_icon ?>
                 </div>
 
                 <h3 class="text-xl font-bold mb-3 text-ghania-dark"><?= $title ?></h3>
@@ -88,7 +110,7 @@ include 'includes/navbar.php';
                 </p>
 
                 <a href="service.php?slug=<?= $row['slug'] ?>"
-                    class="inline-block text-ghania-orange font-semibold hover:tracking-wide transition-all">
+                    class="inline-block text-ghania-orange font-semibold hover:tracking-wide transition-all group-hover:underline">
                     <?= $t['btn_read_more'] ?> &rarr;
                 </a>
             </div>
