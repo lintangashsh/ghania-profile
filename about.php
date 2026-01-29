@@ -11,34 +11,34 @@ $sections = [
     [
         'id' => 'identity',
         'img' => 'assets/img/about/scene_1.PNG',
-        'title_id' => 'Perjalanan Menuju Cakrawala Digital Dunia',
-        'title_en' => 'Navigating the Global Digital Frontier',
-        'content_id' => 'PT Ghania Creative Indonesia adalah manifestasi dari sebuah cita-cita besar yang lahir di jantung Kota Medan. Berdiri tegak sejak tahun 2021, kami bukan sekadar entitas bisnis; kami adalah katalisator transformasi bagi para pelaku usaha. Berlokasi strategis di Medan, kami hadir sebagai mitra strategis dalam layanan website, mobile apps, hingga transisi cloud server.',
-        'content_en' => 'PT Ghania Creative Indonesia stands as the definitive manifestation of a visionary ambition conceived in the vibrant metropolis of Medan. Established in 2021, we are strategic catalysts for transformation. Headquartered in Medan, we serve as a pivotal partner in delivering bespoke website development, mobile apps, and sophisticated server migrations.'
+        'title_id' => 'Perjalanan Menuju Cakrawala Digital Dunia dari Pusat Kota Medan',
+        'title_en' => 'Navigating the Global Digital Frontier from the Heart of Medan',
+        'content_id' => 'PT Ghania Creative Indonesia, atau yang lebih dikenal di ruang kreatif sebagai Ghania Creative Indonesia adalah manifestasi dari sebuah cita-cita besar yang lahir di jantung Kota Medan. Berdiri tegak sejak tahun 2021, kami bukan sekadar entitas bisnis; kami adalah katalisator transformasi bagi para pelaku usaha yang siap menghadapi kompleksitas era digital. Berlokasi strategis di salah satu kecamatan besar di Kota Medan, Indonesia, kami hadir sebagai mitra strategis dalam menyediakan layanan website development, mobile apps development, social media management, hingga transisi infrastruktur digital melalui server migration dari sistem on-premises menuju efisiensi cloud server.',
+        'content_en' => 'PT Ghania Creative Indonesia, known within the creative sphere as Ghania Creative Indonesia, stands as the definitive manifestation of a visionary ambition conceived in the vibrant metropolis of Medan. Established in 2021, we are far more than a mere commercial entity; we are the strategic catalysts for transformation, empowering enterprises to navigate the intricate labyrinth of the digital epoch. Headquartered at one of the major subdistricts in Medan City, Indonesia, we serve as a pivotal partner in delivering bespoke website development, mobile applications, social media management, and sophisticated server migrations, transitioning legacy on-premises systems into the seamless efficiency of cloud environments.'
     ],
     [
         'id' => 'origin',
         'img' => 'assets/img/about/scene_2.PNG',
-        'title_id' => 'Menjawab Keresahan di Tengah Badai',
-        'title_en' => 'A Response to Socio-Economic Unrest',
-        'content_id' => 'Sejarah kami bermula dari diskusi kritis di tengah kelumpuhan pandemi COVID-19 tahun 2021. Kami melihat anomali: UMKM Medan punya semangat juang tinggi namun terhambat literasi digital. Keresahan inilah yang memicu lahirnya Ghania Creative Indonesia. Kami memutuskan bahwa di saat dunia berjarak fisik, teknologi harus menjadi jembatan.',
-        'content_en' => 'Our lineage began amidst the paralysis of the COVID-19 pandemic in 2021. We identified a profound anomaly: SMEs in Medan possessed indomitable spirit yet were stifled by a digital literacy deficit. This unease sparked the birth of Ghania Creative Indonesia. We concluded that in an era of physical distancing, technology must serve as the ultimate bridge.'
+        'title_id' => 'Menjawab Keresahan di Tengah Badai Pandemi',
+        'title_en' => 'A Response to Socio-Economic Unrest Amidst a Global Crisis',
+        'content_id' => 'Sejarah kami tidak dimulai di ruang rapat yang mewah, melainkan dari sebuah diskusi kritis antara pendiri dan dua rekan seperjuangan. Di tahun 2021, dunia sedang dilumpuhkan oleh pandemi COVID-19. Namun, di balik krisis tersebut, kami melihat sebuah anomali: para pelaku Usaha Mikro, Kecil, dan Menengah (UMKM) di Kota Medan memiliki semangat juang yang luar biasa namun terhambat oleh keterbatasan literasi digital. Ada sebuah jarak yang menganga antara keterbukaan pikiran para pelaku usaha terhadap teknologi dengan minimnya dukungan sistematis dari sektor publik dalam memfasilitasi digitalisasi tersebut. <br><br>Keresahan inilah yang memicu lahirnya Ghania Creative Indonesia. Kami memutuskan bahwa di saat dunia sedang berjarak secara fisik, teknologi harus menjadi jembatan. Kami memulai misi kami dari Medan, bukan sebagai pemain pertama, melainkan sebagai pemain yang paling berempati terhadap kebutuhan lokal. Fokus kami sejak awal sangat jelas: mendigitalisasi sektor UMKM yang selama ini menjadi tulang punggung ekonomi namun seringkali terlupakan dalam ekosistem teknologi tinggi.',
+        'content_en' => 'Our lineage did not originate within the confines of a corporate boardroom, but rather through a rigorous, critical discourse between the founder and two pioneering associates. In 2021, the world was gripped by the paralysis of the COVID-19 pandemic. However, amidst this unprecedented upheaval, we identified a profound anomaly: the Small and Medium-Sized Enterprises (SMEs) of Medan possessed an indomitable entrepreneurial spirit, yet were stifled by a palpable digital literacy deficit. There existed a stark disparity between the burgeoning technological openness of business owners and the inadequate systematic support from the public sector in facilitating this vital digital transition. <br><br>This collective unease served as the catalyst for the founding of Ghania Creative Indonesia. We concluded that in an era defined by physical distancing, technology must serve as the ultimate bridge. We inaugurated our mission in Medan, not as a mere participant, but as a specialist uniquely attuned to local exigencies. Our objective was unequivocal: to digitalise the SME sector, the very backbone of the national economy, which had too often been marginalized within the high-technology ecosystem.'
     ],
     [
         'id' => 'expansion',
         'img' => 'assets/img/about/scene_3.PNG',
         'title_id' => 'Melintasi Batas Geografis',
         'title_en' => 'Transcending Geographical Boundaries',
-        'content_id' => 'Kepercayaan masyarakat Medan menjadi bahan bakar kami. Dari Medan, kami merambah ke Banda Aceh, Pekanbaru, Padang, Palembang, hingga Pangkal Pinang. Kami sadar keresahan digital adalah isu nasional. Kami pun mulai dipercaya oleh sektor pendidikan, memastikan infrastruktur digital mereka kokoh adalah tanggung jawab moral kami.',
-        'content_en' => 'Trust from the Medan community propelled us further. From Medan, we expanded to Banda Aceh, Pekanbaru, Padang, Palembang, and Pangkal Pinang. This journey underscored that digital disenfranchisement is a national imperative. We diversified into the education sector, believing that robust digital infrastructure is our professional responsibility.'
+        'content_id' => 'Seiring berjalannya waktu, kepercayaan yang diberikan oleh masyarakat Medan menjadi bahan bakar bagi kami untuk melangkah lebih jauh. Ghania Creative Indonesia mulai memperlebar jendela layanannya melintasi batas-batas provinsi. Dari Medan, kami merambah ke Banda Aceh, Pekanbaru, Padang, Palembang, hingga mencapai Pangkal Pinang. Perjalanan ini menyadarkan kami bahwa keresahan digital bukan hanya milik UMKM di Medan, melainkan isu nasional yang memerlukan solusi lokal berkualitas global. <br><br>Kami pun mulai membuka diri bagi berbagai sektor. Tidak hanya UMKM, kami juga mulai dipercaya oleh organisasi pendidikan, sekolah, lembaga bimbingan belajar, hingga penyedia kursus online. Kami percaya bahwa edukasi adalah fondasi dari ekonomi digital, dan memastikan infrastruktur digital mereka kokoh adalah bagian dari tanggung jawab moral kami.',
+        'content_en' => 'As our reputation for excellence solidified, the trust bestowed upon us by the Medan community propelled us to venture beyond regional confines. Ghania Creative Indonesia began to extend its operational purview across provincial borders. From our base in Medan, we expanded our reach to Banda Aceh, Pekanbaru, Padang, Palembang, and eventually Pangkal Pinang. This journey underscored a vital truth: digital disenfranchisement was not merely a local concern, but a national imperative requiring local solutions underpinned by global standards. <br><br>Consequently, we diversified our portfolio to encompass a broader spectrum of sectors. Our expertise was increasingly sought after by educational institutions, schools, tutoring centres, and online course providers. We maintain the conviction that education is the bedrock of the digital economy; ensuring their digital infrastructure is robust remains a cornerstone of our professional responsibility.'
     ],
     [
         'id' => 'national',
         'img' => 'assets/img/about/scene_4.PNG',
         'title_id' => 'Jejak Langkah di Jawa & Dewata',
         'title_en' => 'The Journey through Java & Bali',
-        'content_id' => 'Tahun 2023, kami ekspansi ke Pulau Jawa. Klien pertama kami adalah mahasiswa visioner di Malang. Keberhasilan ini menjadi batu loncatan hingga ke Pulau Bali. Ini membuktikan dedikasi kami pada kualitas dapat diterima berbagai lapisan, dari mahasiswa hingga pengusaha mapan.',
-        'content_en' => 'In 2023, we expanded into Java. Our inaugural client was a group of visionary students in Malang. This success springboarded us to Bali. This growth affirmed that our unwavering commitment to quality resonated with a diverse clientele, from academic entrepreneurs to established business leaders.'
+        'content_id' => 'Memasuki tahun 2023, di tengah hiruk-pikuk kondisi ekonomi nasional yang penuh tantangan, Ghania Creative Indonesia memberanikan diri melakukan ekspansi ke Pulau Jawa. Klien pertama kami di tanah Jawa berasal dari Kota Malang, sekelompok mahasiswa visioner yang ingin merintis UMKM di tengah dinamika ekonomi yang tak menentu. Keberhasilan proyek di Malang menjadi batu loncatan bagi kami untuk meluaskan jangkauan hingga ke Pulau Bali. Kepercayaan ini membuktikan bahwa dedikasi kami pada kualitas dapat diterima oleh berbagai lapisan masyarakat, dari mahasiswa hingga pengusaha mapan.',
+        'content_en' => 'In 2023, amidst the complexities of a challenging national economic landscape, Ghania Creative Indonesia undertook a strategic expansion into the island of Java. Our inaugural client in Java was located in the city of Malang, a group of visionary university students determined to launch SMEs despite the prevailing economic fluctuations. The success of our endeavours in Malang served as a springboard for further expansion into Bali. This growth affirmed that our unwavering commitment to quality resonated with a diverse clientele, ranging from academic entrepreneurs to established business leaders.'
     ],
     [
         'id' => 'global',
@@ -46,17 +46,17 @@ $sections = [
         'img' => 'https://images.unsplash.com/photo-1559592413-7cec4d0cae2b?q=80&w=1920&auto=format&fit=crop',
         'title_id' => 'Melompat ke Kancah Internasional',
         'title_en' => 'The Global Horizon',
-        'content_id' => 'Tahun 2024 menjadi tonggak sejarah. Malaysia menjadi gerbang internasional pertama, disusul Singapura dan Thailand. Ini validasi bahwa talenta Medan mampu memenuhi standar global. Di awal 2026, kami telah membantu 500+ UMKM dan 50+ klien internasional. Ini adalah representasi ratusan impian yang berhasil kami akselerasikan.',
-        'content_en' => '2024 heralded a momentous milestone. Malaysia became our gateway, followed by Singapore and Thailand. This validated that Medan talent satisfies stringent international benchmarks. By 2026, we have empowered 500+ SMEs and 50+ international clients. These figures represent hundreds of dreams accelerated through technology.'
+        'content_id' => 'Tahun 2024 menjadi tonggak sejarah baru. Kami memutuskan untuk membuka jendela peluang di luar batas teritorial Indonesia. Malaysia menjadi gerbang internasional pertama kami, yang kemudian disusul dengan masuknya klien-klien strategis dari Singapura dan Thailand. Keberhasilan menembus pasar Asia Tenggara ini bukan sekadar pencapaian komersial, melainkan pengakuan bahwa talenta dari Medan mampu memenuhi standar kualitas internasional yang sangat ketat. <br><br>Dengan Hingga saat ini, di awal tahun 2026, catatan sejarah kami telah diwarnai dengan keberhasilan membantu lebih dari 500 UMKM di Indonesia serta lebih dari 50 klien internasional di Singapura, Malaysia, dan Thailand. Angka ini bukan sekadar statistik bagi kami; ini adalah representasi dari ratusan impian yang berhasil kami bantu akselerasikan melalui teknologi.',
+        'content_en' => 'The year 2024 heralded a momentous milestone in our corporate history as we ventured beyond the sovereign borders of Indonesia. Malaysia became our inaugural international gateway, followed by the acquisition of strategic clients in Singapore and Thailand. Successfully penetrating the Southeast Asian market was not merely a commercial triumph; it was a formal validation that talent originating from Medan could satisfy the most stringent international quality benchmarks. <br><br>As we stand at the threshold of 2026, our chronicle is distinguished by the successful empowerment of over 500 SMEs across Indonesia and more than 50 prestigious international clients in Singapore, Malaysia, and Thailand. To us, these figures are not merely cold statistics; they represent the successful acceleration of hundreds of entrepreneurial dreams through the judicious application of technology.'
     ],
     [
         'id' => 'future',
         // MASIH ONLINE (Belum ada scene_6.PNG)
         'img' => 'https://images.unsplash.com/photo-1620712943543-bcc4688e7485?q=80&w=1920&auto=format&fit=crop',
-        'title_id' => 'Masa Depan: Harmonisasi AI',
-        'title_en' => 'The Future: Harmonising AI',
-        'content_id' => 'Dunia memasuki era AI. Di 2026 ini, kami meluncurkan layanan produk digital berbasis AI: chatbot cerdas dan Sistem Informasi Manajemen terintegrasi. Kami percaya AI memanusiakan teknologi. Kami berkomitmen membawa potensi lokal ke tingkat lebih tinggi: "Bringing your local potential to global impact!"',
-        'content_en' => 'The world has entered the AI era. In 2026, we unveil AI-driven digital products: intelligent chatbots and integrated MIS. We believe AI humanises technology. We remain committed to elevating local potential: "Bringing your local potential to global impact!"'
+        'title_id' => 'Harmonisasi AI dan Integritas Digital',
+        'title_en' => 'Harmonising Artificial Intelligence with Digital Integrity',
+        'content_id' => 'Dunia kini memasuki babak baru, era Kecerdasan Buatan (AI). Ghania Creative Indonesia tidak hanya sekadar menjadi penonton. Di tahun 2026 ini, kami meluncurkan layanan inovatif terbaru kami: penjualan produk digital berbasis AI yang difokuskan pada aplikasi chatbot cerdas dan Sistem Informasi Manajemen (SIM) yang terintegrasi. Kami percaya bahwa AI adalah instrumen untuk memanusiakan teknologi, mempermudah akses informasi, dan mengoptimalkan efisiensi bisnis klien kami. <br><br>Kami berkomitmen untuk tetap rendah hati dalam pencapaian namun tetap agresif dalam inovasi. Kami akan terus membawa potensi lokal ke tingkat yang lebih tinggi, sesuai dengan moto yang senantiasa menjiwai setiap baris kode yang kami tulis… <br><br>"Bringing your local potential to global impact!"',
+        'content_en' => 'The global landscape has entered a transformative new chapter, the era of Artificial Intelligence (AI). Ghania Creative Indonesia refuses to be a mere spectator in this revolution. In 2026, we are proud to unveil our latest suite of innovative services: bespoke AI-driven digital products, focusing on sophisticated intelligent chatbots and integrated Management Information Systems (MIS). We believe that AI is the definitive instrument for humanising technology, streamlining information accessibility, and optimising operational efficiency for our clientele. <br><br>We remain steadfast in our commitment to humility in achievement, yet aggressive in our pursuit of innovation. We shall continue to elevate local potential to unprecedented heights, guided by the ethos that permeates every line of code we craft… <br><br>"Bringing your local potential to global impact!"'
     ]
 ];
 
@@ -130,8 +130,6 @@ body::-webkit-scrollbar {
     <div id="bg-<?= $section['id'] ?>"
         class="absolute inset-0 w-full h-full transition-opacity duration-1000 ease-in-out <?= $index === 0 ? 'opacity-50' : 'opacity-0' ?>">
         <img src="<?= $section['img'] ?>" class="w-full h-full object-cover">
-        <!-- <div class="absolute inset-0 bg-gradient-to-r from-black/95 via-black/70 to-black/30"></div> -->
-        <!-- <div class="absolute inset-0 bg-gradient-to-r from-black/80 via-black/50 to-black/20"></div> -->
         <div class="absolute inset-0 bg-gradient-to-r from-black/70 via-black/40 to-transparent"></div>
     </div>
     <?php endforeach; ?>
@@ -155,7 +153,9 @@ body::-webkit-scrollbar {
                 <span
                     class="text-ghania-orange font-mono text-xl md:text-2xl font-bold tracking-widest">0<?= $index + 1 ?></span>
                 <div class="h-px w-12 bg-white/30"></div>
-                <span class="text-white/50 uppercase tracking-widest text-sm">Our Journey</span>
+                <span class="text-white/50 uppercase tracking-widest text-sm">
+                    <?= ($lang_code == 'en') ? "Our Journey" : "Perjalanan Kami" ?>
+                </span>
             </div>
 
             <h2 class="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-8 leading-tight drop-shadow-lg">
@@ -181,7 +181,7 @@ body::-webkit-scrollbar {
                 <div>
                     <span class="text-ghania-orange font-bold tracking-widest uppercase mb-2 block">Collaboration</span>
                     <h2 class="text-4xl md:text-6xl font-bold leading-tight">
-                        <?= ($lang_code == 'en') ? "Ready to Start Your<br>Digital Transformation?" : "Siap Memulai<br>Transformasi Digital?" ?>
+                        <?= ($lang_code == 'en') ? "Ready to Start<br>Your Digital Transformation?" : "Siap Memulai<br>Transformasi Digital Anda?" ?>
                     </h2>
                 </div>
                 <p class="text-gray-300 text-lg leading-relaxed">
@@ -198,8 +198,9 @@ body::-webkit-scrollbar {
                             </svg>
                         </div>
                         <div>
-                            <p class="text-xs text-gray-400 uppercase">Email Us</p>
-                            <p class="text-xl font-semibold">hello@ghaniacreative.com</p>
+                            <p class="text-xs text-gray-400 uppercase">
+                                <?= ($lang_code == 'en') ? "Email Us" : "Email kepada Kami" ?></p>
+                            <p class="text-xl font-semibold">hello@ghaniacreative.id</p>
                         </div>
                     </div>
                     <div class="flex items-center space-x-4">
@@ -223,13 +224,13 @@ body::-webkit-scrollbar {
                 <form action="#" method="POST" class="space-y-5">
                     <input type="text"
                         class="w-full px-4 py-3 rounded-lg bg-gray-50 border border-gray-200 focus:outline-none focus:border-ghania-orange"
-                        placeholder="Nama Lengkap">
-                    <input type="email"
+                        placeholder="<?= ($lang_code == 'en') ? "Your Full Name" : "Nama Lengkap Anda" ?>">
+                    <input type=" email"
                         class="w-full px-4 py-3 rounded-lg bg-gray-50 border border-gray-200 focus:outline-none focus:border-ghania-orange"
-                        placeholder="Email Bisnis">
+                        placeholder="<?= ($lang_code == 'en') ? "Email Address" : "Alamat Email Anda" ?>">
                     <textarea rows="3"
                         class="w-full px-4 py-3 rounded-lg bg-gray-50 border border-gray-200 focus:outline-none focus:border-ghania-orange"
-                        placeholder="Ceritakan kebutuhan Anda..."></textarea>
+                        placeholder="<?= ($lang_code == 'en') ? "Tell us What You Need..." : "Beritahu Kami Apa Yang Anda Butuhkan..." ?>"></textarea>
                     <button type="submit"
                         class="w-full bg-ghania-orange text-white font-bold py-4 rounded-xl hover:bg-orange-600 transition shadow-lg transform hover:-translate-y-1"><?= ($lang_code == 'en') ? "Send Message" : "Kirim Pesan" ?></button>
                 </form>
