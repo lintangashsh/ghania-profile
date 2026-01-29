@@ -111,6 +111,7 @@ include 'includes/navbar.php';
     </div>
 </section>
 
+<!-- section our clients logo -->
 <section class="py-16 bg-white border-t border-gray-100">
     <div class="container mx-auto px-4 mb-10 text-center">
         <h2 class="text-2xl font-bold text-ghania-dark"><?= $t['title_clients'] ?></h2>
@@ -118,13 +119,16 @@ include 'includes/navbar.php';
     </div>
 
     <div class="container mx-auto px-4">
-        <div class="swiper clientSwiper">
+        <div class="swiper clientSwiper px-4">
             <div class="swiper-wrapper items-center">
-                <?php for ($i = 0; $i < 10; $i++): ?>
-                <div
-                    class="swiper-slide flex justify-center grayscale opacity-50 hover:grayscale-0 hover:opacity-100 transition duration-300 cursor-pointer">
-                    <img src="https://via.placeholder.com/150x50?text=CLIENT+<?= $i + 1 ?>" alt="Client Logo"
-                        class="h-12 object-contain">
+                <?php for ($i = 1; $i <= 20; $i++): ?>
+                <div class="swiper-slide flex justify-center items-center p-4">
+                    <div
+                        class="grayscale opacity-40 hover:grayscale-0 hover:opacity-100 transition-all duration-500 cursor-pointer transform hover:scale-110">
+                        <img src="assets/img/clients/client-<?= $i ?>.png" alt="Client <?= $i ?>"
+                            class="h-16 md:h-16 w-auto object-contain"
+                            onerror="this.src='https://via.placeholder.com/150x50?text=CLIENT+<?= $i ?>'; this.className='h-8 object-contain opacity-50';">
+                    </div>
                 </div>
                 <?php endfor; ?>
             </div>
