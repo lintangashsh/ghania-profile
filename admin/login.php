@@ -56,6 +56,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login Admin - Ghania Creative</title>
+    <link rel="icon" type="image/png" href="/assets/img/ghania-3d.png">
     <link href="/assets/css/style.css" rel="stylesheet">
 </head>
 

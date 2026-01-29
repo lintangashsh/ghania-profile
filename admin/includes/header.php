@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title><?= isset($page_title) ? $page_title . ' - Ghania Creative' : 'PT Ghania Creative Indonesia' ?></title>
+    <link rel="icon" type="image/png" href="/assets/img/ghania-3d.png">
 
     <?php if (isset($meta_desc) && !empty($meta_desc)): ?>
     <meta name="description" content="<?= $meta_desc ?>">

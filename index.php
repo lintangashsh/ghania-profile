@@ -1,9 +1,12 @@
 <?php
 require 'config/database.php';
 require 'config/lang.php';
+$page_title = ($lang_code == 'id') ? 'Beranda' : 'Home';
 // Setup SEO
 include 'includes/header.php';
 include 'includes/navbar.php';
+require 'config/tracker.php';
+record_visit($conn, 'home', 'Halaman Utama');
 ?>
 
 <!-- section awal/carousel -->
@@ -58,7 +61,7 @@ include 'includes/navbar.php';
     <div class="container mx-auto px-4 text-center">
         <h2 class="text-3xl md:text-4xl font-bold mb-4 text-ghania-dark"><?= $t['nav_services'] ?></h2>
         <p class="text-gray-500 mb-12 max-w-2xl mx-auto">
-            <?= ($lang_code == 'id') ? 'Solusi digital terbaik untuk pertumbuhan bisnis Anda.' : 'The best digital solutions for your business growth.' ?>
+            <?= ($lang_code == 'id') ? 'Solusi digital terbaik untuk pertumbuhan bisnis Anda' : 'The best digital solutions for your business growth' ?>
         </p>
 
         <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -139,7 +142,7 @@ include 'includes/navbar.php';
 <!-- section our clients logo -->
 <section class="py-16 bg-white border-t border-gray-100">
     <div class="container mx-auto px-4 mb-10 text-center">
-        <h2 class="text-2xl font-bold text-ghania-dark"><?= $t['title_clients'] ?></h2>
+        <h2 class="text-3xl font-bold text-ghania-dark"><?= $t['title_clients'] ?></h2>
         <div class="w-16 h-1 bg-ghania-orange mx-auto mt-2 rounded"></div>
     </div>
 
@@ -167,7 +170,9 @@ include 'includes/navbar.php';
         <div class="flex justify-between items-end mb-12">
             <div>
                 <h2 class="text-3xl font-bold text-ghania-dark mb-2"><?= $t['title_latest_articles'] ?></h2>
-                <p class="text-gray-500">Update wawasan terbaru seputar dunia digital.</p>
+                <p class="text-gray-500">
+                    <?= $t['txt_articles'] ?>
+                </p>
             </div>
             <a href="articles.php"
                 class="hidden md:inline-flex items-center text-ghania-orange font-semibold hover:underline">

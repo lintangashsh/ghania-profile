@@ -15,8 +15,14 @@ if (!$article) {
     exit();
 }
 
-// Update Views
+// === [NEW] LOGIC TRAFFIC & TRACKER ===
+// 1. Update Counter di Tabel Articles
 $conn->query("UPDATE articles SET views = views + 1 WHERE id = " . $article['id']);
+
+// 2. Catat Log Pengunjung ke Tabel visitor_logs (Untuk Dashboard)
+require_once 'config/tracker.php';
+record_visit($conn, 'article', $article['title_id']);
+// =====================================
 
 // Logic Bahasa
 if ($lang_code == 'en') {
@@ -27,13 +33,9 @@ if ($lang_code == 'en') {
     $raw_content = $article['content_id'];
 }
 
-// === FIX CLEANING DATA (Pembersih) ===
-// 1. Hapus garis miring ganda (Indonesia\'s -> Indonesia's)
+// === FIX CLEANING DATA ===
 $display_title = stripslashes($raw_title);
 $clean_content = stripslashes($raw_content);
-
-// 2. Hapus teks "\r\n" literal yang muncul di layar
-// Kita ganti literal "\r\n" menjadi <br> HTML agar turun baris, atau spasi jika di judul
 $clean_content = str_replace(array('\r\n', '\r', '\n', '\\r\\n'), '<br>', $clean_content);
 
 // Setup SEO

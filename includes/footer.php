@@ -11,7 +11,7 @@
                     </div>
                 </div>
                 <p class="text-gray-400 mb-6 text-sm leading-relaxed">
-                    Simplified Your Business Problems. Partner digital terbaik untuk transformasi bisnis Anda.
+                    <?= $t['txt_footer_ghania'] ?>
                 </p>
 
                 <div class="space-y-3 text-sm text-gray-300">
