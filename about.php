@@ -42,8 +42,7 @@ $sections = [
     ],
     [
         'id' => 'global',
-        // MASIH ONLINE (Belum ada scene_5.PNG) - Nanti ganti kalau sudah ada
-        'img' => 'https://images.unsplash.com/photo-1559592413-7cec4d0cae2b?q=80&w=1920&auto=format&fit=crop',
+        'img' => 'assets/img/about/scene_5.PNG',
         'title_id' => 'Melompat ke Kancah Internasional',
         'title_en' => 'The Global Horizon',
         'content_id' => 'Tahun 2024 menjadi tonggak sejarah baru. Kami memutuskan untuk membuka jendela peluang di luar batas teritorial Indonesia. Malaysia menjadi gerbang internasional pertama kami, yang kemudian disusul dengan masuknya klien-klien strategis dari Singapura dan Thailand. Keberhasilan menembus pasar Asia Tenggara ini bukan sekadar pencapaian komersial, melainkan pengakuan bahwa talenta dari Medan mampu memenuhi standar kualitas internasional yang sangat ketat. <br><br>Dengan Hingga saat ini, di awal tahun 2026, catatan sejarah kami telah diwarnai dengan keberhasilan membantu lebih dari 500 UMKM di Indonesia serta lebih dari 50 klien internasional di Singapura, Malaysia, dan Thailand. Angka ini bukan sekadar statistik bagi kami; ini adalah representasi dari ratusan impian yang berhasil kami bantu akselerasikan melalui teknologi.',
@@ -51,8 +50,7 @@ $sections = [
     ],
     [
         'id' => 'future',
-        // MASIH ONLINE (Belum ada scene_6.PNG)
-        'img' => 'https://images.unsplash.com/photo-1620712943543-bcc4688e7485?q=80&w=1920&auto=format&fit=crop',
+        'img' => 'assets/img/about/scene_6.PNG',
         'title_id' => 'Harmonisasi AI dan Integritas Digital',
         'title_en' => 'Harmonising Artificial Intelligence with Digital Integrity',
         'content_id' => 'Dunia kini memasuki babak baru, era Kecerdasan Buatan (AI). Ghania Creative Indonesia tidak hanya sekadar menjadi penonton. Di tahun 2026 ini, kami meluncurkan layanan inovatif terbaru kami: penjualan produk digital berbasis AI yang difokuskan pada aplikasi chatbot cerdas dan Sistem Informasi Manajemen (SIM) yang terintegrasi. Kami percaya bahwa AI adalah instrumen untuk memanusiakan teknologi, mempermudah akses informasi, dan mengoptimalkan efisiensi bisnis klien kami. <br><br>Kami berkomitmen untuk tetap rendah hati dalam pencapaian namun tetap agresif dalam inovasi. Kami akan terus membawa potensi lokal ke tingkat yang lebih tinggi, sesuai dengan moto yang senantiasa menjiwai setiap baris kode yang kami tulis… <br><br>"Bringing your local potential to global impact!"',
@@ -60,7 +58,7 @@ $sections = [
     ]
 ];
 
-$contact_bg = "https://images.unsplash.com/photo-1521737604893-d14cc237f11d?q=80&w=1920&auto=format&fit=crop";
+$contact_bg = "assets/img/about/scene_7.PNG";
 ?>
 
 <style>
