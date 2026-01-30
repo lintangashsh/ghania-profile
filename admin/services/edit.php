@@ -31,7 +31,7 @@ if (!$data) {
     exit();
 }
 
-// --- PROSES UPDATE DATA ---
+// PROSES UPDATE DATA
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $title_id = $conn->real_escape_string($_POST['title_id']);
     $title_en = $conn->real_escape_string($_POST['title_en']);
@@ -43,8 +43,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     // Update Slug (ikut berubah kalau judul berubah)
     $slug = strtolower(trim(preg_replace('/[^A-Za-z0-9-]+/', '-', $title_en)));
 
-    // --- HANDLE GAMBAR ---
-    $thumbnail = $data['thumbnail']; // Default: pakai gambar lama
+    // HANDLE GAMBAR
+    $thumbnail = $data['thumbnail'];
 
     if (isset($_FILES['thumbnail']) && $_FILES['thumbnail']['error'] == 0) {
         $target_dir = "../../assets/uploads/";
@@ -55,7 +55,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
         if (in_array($imageFileType, $allowed)) {
             if (move_uploaded_file($_FILES["thumbnail"]["tmp_name"], $target_file)) {
-                // HAPUS GAMBAR LAMA (Jika ada & file-nya eksis)
+                // HAPUS GAMBAR LAMA
                 if (!empty($data['thumbnail']) && file_exists("../../" . $data['thumbnail'])) {
                     unlink("../../" . $data['thumbnail']);
                 }
