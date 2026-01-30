@@ -2285,6 +2285,11 @@
       padding-block: calc(var(--spacing) * 48);
     }
   }
+  .lg\:pt-20 {
+    @media (width >= 64rem) {
+      padding-top: calc(var(--spacing) * 20);
+    }
+  }
   .lg\:pt-48 {
     @media (width >= 64rem) {
       padding-top: calc(var(--spacing) * 48);

@@ -328,9 +328,11 @@ body::-webkit-scrollbar {
     <!-- section out clients/klien kami -->
     <section id="sec-clients" class="min-h-[60vh] flex items-center py-20 snap-section" data-target="bg-clients">
         <div class="container mx-auto px-6 fade-up-enter text-center">
-            <h2 class="text-3xl font-bold text-white mb-10 uppercase tracking-widest"><?= $t['title_clients'] ?></h2>
 
-            <div class="bg-white/10 backdrop-blur-md rounded-3xl p-8 border border-white/10">
+            <h2 class="text-4xl md:text-5xl font-bold text-white mb-4"><?= $t['title_clients'] ?></h2>
+            <div class="w-24 h-1 bg-ghania-orange mx-auto rounded"></div>
+
+            <div class="bg-white/10 backdrop-blur-md rounded-3xl p-8 border border-white/10 shadow-2xl mb-12 mt-12">
                 <div class="swiper clientSwiper">
                     <div class="swiper-wrapper items-center">
                         <?php for ($i = 1; $i <= 20; $i++): ?>
@@ -343,6 +345,13 @@ body::-webkit-scrollbar {
                     </div>
                 </div>
             </div>
+
+            <p class="text-gray-300 text-lg max-w-4xl mx-auto leading-relaxed font-light">
+                <?= ($lang_code == 'id')
+                    ? "Berawal dari Medan, Ghania Creative Indonesia kini hadir sebagai mitra transformasi digital lintas negara bagi berbagai sektor industri. Melalui solusi teknologi yang adaptif, kami menjembatani potensi lokal menuju pasar internasional, memperluas dampak setiap mitra mulai dari Nusantara hingga ke kancah Internasional."
+                    : "Originating from Medan, Ghania Creative Indonesia has evolved into a pre-eminent cross-border digital transformation partner catering to a diverse industrial landscape. Through bespoke and adaptive technological solutions, we bridge the gap between regional potential and the global stage, extending our partners' influence from the heart of the Indonesian archipelago to the strategic markets of the International Arena." ?>
+            </p>
+
         </div>
     </section>
 
