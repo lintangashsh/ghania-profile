@@ -53,16 +53,16 @@ $sections = [
         'img' => 'assets/img/about/scene_6.PNG',
         'title_id' => 'Harmonisasi AI dan Integritas Digital',
         'title_en' => 'Harmonising Artificial Intelligence with Digital Integrity',
-        'content_id' => 'Dunia kini memasuki babak baru, era Kecerdasan Buatan (AI). Ghania Creative Indonesia tidak hanya sekadar menjadi penonton. Di tahun 2026 ini, kami meluncurkan layanan inovatif terbaru kami: penjualan produk digital berbasis AI yang difokuskan pada aplikasi chatbot cerdas dan Sistem Informasi Manajemen (SIM) yang terintegrasi. Kami percaya bahwa AI adalah instrumen untuk memanusiakan teknologi, mempermudah akses informasi, dan mengoptimalkan efisiensi bisnis klien kami. <br><br>Kami berkomitmen untuk tetap rendah hati dalam pencapaian namun tetap agresif dalam inovasi. Kami akan terus membawa potensi lokal ke tingkat yang lebih tinggi, sesuai dengan moto yang senantiasa menjiwai setiap baris kode yang kami tulis… <br><br>"Bringing your local potential to global impact!"',
-        'content_en' => 'The global landscape has entered a transformative new chapter, the era of Artificial Intelligence (AI). Ghania Creative Indonesia refuses to be a mere spectator in this revolution. In 2026, we are proud to unveil our latest suite of innovative services: bespoke AI-driven digital products, focusing on sophisticated intelligent chatbots and integrated Management Information Systems (MIS). We believe that AI is the definitive instrument for humanising technology, streamlining information accessibility, and optimising operational efficiency for our clientele. <br><br>We remain steadfast in our commitment to humility in achievement, yet aggressive in our pursuit of innovation. We shall continue to elevate local potential to unprecedented heights, guided by the ethos that permeates every line of code we craft… <br><br>"Bringing your local potential to global impact!"'
+        'content_id' => 'Dunia kini memasuki babak baru, era Kecerdasan Buatan (AI). Ghania Creative Indonesia tidak hanya sekadar menjadi penonton. Di tahun 2026 ini, kami meluncurkan layanan inovatif terbaru kami: penjualan produk digital berbasis AI yang difokuskan pada aplikasi chatbot cerdas dan Sistem Informasi Manajemen (SIM) yang terintegrasi. Kami percaya bahwa AI adalah instrumen untuk memanusiakan teknologi, mempermudah akses informasi, dan mengoptimalkan efisiensi bisnis klien kami. <br><br>Kami berkomitmen untuk tetap rendah hati dalam pencapaian namun tetap agresif dalam inovasi. Kami akan terus membawa potensi lokal ke tingkat yang lebih tinggi, sesuai dengan moto yang senantiasa menjiwai setiap baris kode yang kami tulis… <br><br><span class="block font-bold italic text-ghania-orange text-xl">"Bringing your local potential to global impact!"</span>',
+        'content_en' => 'The global landscape has entered a transformative new chapter, the era of Artificial Intelligence (AI). Ghania Creative Indonesia refuses to be a mere spectator in this revolution. In 2026, we are proud to unveil our latest suite of innovative services: bespoke AI-driven digital products, focusing on sophisticated intelligent chatbots and integrated Management Information Systems (MIS). We believe that AI is the definitive instrument for humanising technology, streamlining information accessibility, and optimising operational efficiency for our clientele. <br><br>We remain steadfast in our commitment to humility in achievement, yet aggressive in our pursuit of innovation. We shall continue to elevate local potential to unprecedented heights, guided by the ethos that permeates every line of code we craft… <br><br><span class="block font-bold italic text-ghania-orange text-xl">"Bringing your local potential to global impact!"</span>'
     ]
 ];
 
 $contact_bg = "assets/img/about/scene_7.PNG";
 ?>
 
+
 <style>
-/* HIDE SCROLLBAR */
 html,
 body {
     scrollbar-width: none !important;
@@ -74,9 +74,8 @@ body::-webkit-scrollbar {
     display: none !important;
 }
 
-/* === LOGIKA NAVBAR KHUSUS === */
+/* LOGIC NAVBAR KHUSUS */
 
-/* 1. Paksa Teks Selalu Putih (Walaupun discroll) */
 .nav-link,
 .lang-link {
     color: #ffffff !important;
@@ -92,20 +91,15 @@ body::-webkit-scrollbar {
     filter: brightness(0) invert(1) !important;
 }
 
-/* 2. Override Background Saat Scroll */
-/* Saat navbar.php mendeteksi scroll, dia nambahin class 'bg-white/95'. */
-/* Kita timpa class itu khusus di halaman ini menjadi Hitam 50%. */
+/* Override Background Saat Scroll */
 #navbar.bg-white\/95 {
     background-color: rgba(0, 0, 0, 0.5) !important;
-    /* Hitam Transparan 50% */
     backdrop-filter: blur(8px) !important;
-    /* Blur biar makin estetik */
     box-shadow: none !important;
     border-bottom: 1px solid rgba(255, 255, 255, 0.1) !important;
-    /* Garis tipis biar tegas */
 }
 
-/* 3. Padding Navbar */
+/* Padding Navbar */
 #navbar {
     transition: background-color 0.5s ease, padding 0.3s ease;
 }
@@ -171,6 +165,7 @@ body::-webkit-scrollbar {
     </section>
     <?php endforeach; ?>
 
+    <!-- section collaboration form -->
     <section id="sec-contact" class="min-h-screen flex items-center justify-center px-4 py-20 snap-section"
         data-target="bg-contact">
         <div class="max-w-6xl w-full grid grid-cols-1 lg:grid-cols-2 gap-12 items-center fade-up-enter">
