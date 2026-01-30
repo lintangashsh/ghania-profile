@@ -11,11 +11,12 @@ record_visit($conn, 'home', 'Halaman Utama');
 
 // --- DATA BACKGROUND UNTUK SCROLLYTELLING (Section 2 ke bawah) ---
 // Section 1 (Hero) punya background sendiri di dalam Slidernya.
+// Section 2 (About) dibiarkan transparan/hitam agar fokus ke konten.
 $bg_sections = [
-    'about'     => 'https://images.unsplash.com/photo-1497215728101-856f4ea42174?q=80&w=1920&auto=format&fit=crop', // Office vibes (Clean)
-    'services'  => 'https://images.unsplash.com/photo-1550751827-4bd374c3f58b?q=80&w=1920&auto=format&fit=crop', // Tech/Cyberpunk vibes
-    'clients'   => 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=1920&auto=format&fit=crop', // Building/Corporate vibes
-    'articles'  => 'https://images.unsplash.com/photo-1519389950473-47ba0277781c?q=80&w=1920&auto=format&fit=crop', // Workspace/Coffee vibes
+    'about'     => '', // Kosongkan agar background hitam default (sesuai request)
+    'services'  => 'https://images.unsplash.com/photo-1550751827-4bd374c3f58b?q=80&w=1920&auto=format&fit=crop', // Tech vibes
+    'clients'   => 'https://images.unsplash.com/photo-1497366216548-37526070297c?q=80&w=1920&auto=format&fit=crop', // Corporate vibes
+    'articles'  => 'https://images.unsplash.com/photo-1519389950473-47ba0277781c?q=80&w=1920&auto=format&fit=crop', // Coffee/Read vibes
 ];
 ?>
 
@@ -27,13 +28,15 @@ body {
     -ms-overflow-style: none !important;
     overflow-y: scroll;
     scroll-behavior: smooth;
+    background-color: black;
+    /* Default BG */
 }
 
 body::-webkit-scrollbar {
     display: none !important;
 }
 
-/* 2. NAVBAR OVERRIDE (Transparan ke 50% Dark) */
+/* 2. NAVBAR OVERRIDE (Transparan ke 50% Dark saat scroll) */
 .nav-link,
 .lang-link {
     color: #ffffff !important;
@@ -50,7 +53,7 @@ body::-webkit-scrollbar {
 
 #navbar.bg-white\/95 {
     background-color: rgba(0, 0, 0, 0.5) !important;
-    backdrop-filter: blur(8px) !important;
+    backdrop-filter: blur(10px) !important;
     box-shadow: none !important;
     border-bottom: 1px solid rgba(255, 255, 255, 0.1) !important;
 }
@@ -81,15 +84,36 @@ body::-webkit-scrollbar {
     background: #FF6600 !important;
     opacity: 1;
 }
+
+/* 5. FLOATING ANIMATION (Untuk Logo 3D) */
+@keyframes float {
+    0% {
+        transform: translateY(0px);
+    }
+
+    50% {
+        transform: translateY(-20px);
+    }
+
+    100% {
+        transform: translateY(0px);
+    }
+}
+
+.animate-float {
+    animation: float 6s ease-in-out infinite;
+}
 </style>
 
 <div class="fixed inset-0 w-full h-full z-0 bg-black">
     <?php foreach ($bg_sections as $id => $img): ?>
+    <?php if ($img): ?>
     <div id="bg-<?= $id ?>"
         class="absolute inset-0 w-full h-full transition-opacity duration-1000 ease-in-out opacity-0">
         <img src="<?= $img ?>" class="w-full h-full object-cover">
         <div class="absolute inset-0 bg-gradient-to-r from-black/90 via-black/70 to-black/40"></div>
     </div>
+    <?php endif; ?>
     <?php endforeach; ?>
 </div>
 
@@ -99,7 +123,7 @@ body::-webkit-scrollbar {
         <div class="swiper heroSwiper h-full w-full">
             <div class="swiper-wrapper">
 
-                <div class="swiper-slide relative">
+                <div class="swiper-slide relative bg-black">
                     <div class="absolute inset-0">
                         <img src="assets/img/hero-bg.png" class="w-full h-full object-cover opacity-60">
                         <div class="absolute inset-0 bg-gradient-to-r from-black via-black/50 to-transparent"></div>
@@ -114,7 +138,7 @@ body::-webkit-scrollbar {
                                 <h2 class="text-2xl md:text-3xl text-gray-300 font-light mb-2">
                                     Ghania Creative Indonesia
                                 </h2>
-                                <p class="text-gray-400 text-lg mb-8 tracking-wider uppercase">
+                                <p class="text-gray-400 text-lg mb-8 tracking-wider uppercase font-semibold">
                                     <?= ($lang_code == 'id') ? 'Digital Creative Agency Sejak 2021' : 'Digital Creative Agency Since 2021' ?>
                                 </p>
                                 <a href="https://wa.me/6281234567890" target="_blank"
@@ -126,15 +150,23 @@ body::-webkit-scrollbar {
                     </div>
                 </div>
 
-                <div class="swiper-slide relative">
+                <div class="swiper-slide relative bg-black">
                     <div class="absolute inset-0">
                         <img src="https://images.unsplash.com/photo-1461749280684-dccba630e2f6?q=80&w=1920&auto=format&fit=crop"
-                            class="w-full h-full object-cover">
-                        <div class="absolute inset-0 bg-black/70"></div>
+                            class="w-full h-full object-cover opacity-50">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-black/30"></div>
                     </div>
                     <div
                         class="relative z-10 container mx-auto px-6 h-full flex items-center justify-center text-center">
                         <div class="max-w-3xl">
+                            <div
+                                class="w-20 h-20 bg-ghania-orange/20 rounded-full flex items-center justify-center mx-auto mb-6 text-ghania-orange backdrop-blur-sm border border-ghania-orange/30">
+                                <svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z">
+                                    </path>
+                                </svg>
+                            </div>
                             <h2 class="text-4xl md:text-6xl font-bold text-white mb-6">Website Development</h2>
                             <p class="text-xl text-gray-300 mb-8 leading-relaxed">
                                 <?= ($lang_code == 'id')
@@ -145,15 +177,23 @@ body::-webkit-scrollbar {
                     </div>
                 </div>
 
-                <div class="swiper-slide relative">
+                <div class="swiper-slide relative bg-black">
                     <div class="absolute inset-0">
                         <img src="https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?q=80&w=1920&auto=format&fit=crop"
-                            class="w-full h-full object-cover">
-                        <div class="absolute inset-0 bg-black/70"></div>
+                            class="w-full h-full object-cover opacity-50">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-black/30"></div>
                     </div>
                     <div
                         class="relative z-10 container mx-auto px-6 h-full flex items-center justify-center text-center">
                         <div class="max-w-3xl">
+                            <div
+                                class="w-20 h-20 bg-ghania-orange/20 rounded-full flex items-center justify-center mx-auto mb-6 text-ghania-orange backdrop-blur-sm border border-ghania-orange/30">
+                                <svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z">
+                                    </path>
+                                </svg>
+                            </div>
                             <h2 class="text-4xl md:text-6xl font-bold text-white mb-6">Mobile Apps Development</h2>
                             <p class="text-xl text-gray-300 mb-8 leading-relaxed">
                                 <?= ($lang_code == 'id')
@@ -164,15 +204,23 @@ body::-webkit-scrollbar {
                     </div>
                 </div>
 
-                <div class="swiper-slide relative">
+                <div class="swiper-slide relative bg-black">
                     <div class="absolute inset-0">
                         <img src="https://images.unsplash.com/photo-1611162617474-5b21e879e113?q=80&w=1920&auto=format&fit=crop"
-                            class="w-full h-full object-cover">
-                        <div class="absolute inset-0 bg-black/70"></div>
+                            class="w-full h-full object-cover opacity-50">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-black/30"></div>
                     </div>
                     <div
                         class="relative z-10 container mx-auto px-6 h-full flex items-center justify-center text-center">
                         <div class="max-w-3xl">
+                            <div
+                                class="w-20 h-20 bg-ghania-orange/20 rounded-full flex items-center justify-center mx-auto mb-6 text-ghania-orange backdrop-blur-sm border border-ghania-orange/30">
+                                <svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M11 5.882V19.24a1.76 1.76 0 01-3.417.592l-2.147-6.15M18 13a3 3 0 100-6M5.436 13.683A4.001 4.001 0 017 6h1.832c4.1 0 7.625-1.234 9.168-3v14c-1.543-1.766-5.067-3-9.168-3H7a3.988 3.988 0 01-1.564-.317z">
+                                    </path>
+                                </svg>
+                            </div>
                             <h2 class="text-4xl md:text-6xl font-bold text-white mb-6">Social Media Management</h2>
                             <p class="text-xl text-gray-300 mb-8 leading-relaxed">
                                 <?= ($lang_code == 'id')
@@ -192,7 +240,7 @@ body::-webkit-scrollbar {
         <div class="container mx-auto px-6 md:px-12">
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center fade-up-enter">
 
-                <div class="flex justify-center lg:justify-end">
+                <div class="flex justify-center lg:justify-end order-1 lg:order-1">
                     <div class="relative w-64 h-64 md:w-96 md:h-96">
                         <div class="absolute inset-0 bg-ghania-orange/20 blur-[100px] rounded-full"></div>
                         <img src="assets/img/logo-ghania-3d.PNG" alt="Ghania 3D Logo"
@@ -200,10 +248,10 @@ body::-webkit-scrollbar {
                     </div>
                 </div>
 
-                <div class="text-white text-center lg:text-left">
+                <div class="text-white text-center lg:text-left order-2 lg:order-2">
                     <span class="text-ghania-orange font-bold tracking-widest uppercase mb-2 block">Who We Are</span>
                     <h2 class="text-4xl md:text-5xl font-bold mb-6 leading-tight">Ghania Creative<br>Indonesia</h2>
-                    <p class="text-gray-200 text-lg leading-relaxed mb-8 font-light">
+                    <p class="text-gray-300 text-lg leading-relaxed mb-8 font-light">
                         <?= ($lang_code == 'id')
                             ? "Ghania Creative Indonesia merupakan sebuah perusahaan <b>Digital Creative Agency</b> yang memiliki layanan utama dalam Mobile Apps Development, Website Development, dan Social Media Management. Kami lahir untuk mendigitalisasi potensi lokal menuju dampak global."
                             : "Ghania Creative Indonesia is a <b>Digital Creative Agency</b> specializing in Mobile Apps Development, Website Development, and Social Media Management. We were born to digitalize local potential for global impact." ?>
@@ -232,7 +280,7 @@ body::-webkit-scrollbar {
 
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                 <?php
-                // Logic Icon (Sama seperti sebelumnya)
+                // Logic Icon
                 $icon_web = '<svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>';
                 $icon_app = '<svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z"></path></svg>';
                 $icon_socmed = '<svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5.882V19.24a1.76 1.76 0 01-3.417.592l-2.147-6.15M18 13a3 3 0 100-6M5.436 13.683A4.001 4.001 0 017 6h1.832c4.1 0 7.625-1.234 9.168-3v14c-1.543-1.766-5.067-3-9.168-3H7a3.988 3.988 0 01-1.564-.317z"></path></svg>';
@@ -275,7 +323,7 @@ body::-webkit-scrollbar {
         </div>
     </section>
 
-    <section id="sec-clients" class="min-h-[50vh] flex items-center py-20 snap-section" data-target="bg-clients">
+    <section id="sec-clients" class="min-h-[60vh] flex items-center py-20 snap-section" data-target="bg-clients">
         <div class="container mx-auto px-6 fade-up-enter text-center">
             <h2 class="text-3xl font-bold text-white mb-10 uppercase tracking-widest"><?= $t['title_clients'] ?></h2>
 
@@ -369,30 +417,10 @@ body::-webkit-scrollbar {
 
 <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 
-<style>
-@keyframes float {
-    0% {
-        transform: translateY(0px);
-    }
-
-    50% {
-        transform: translateY(-20px);
-    }
-
-    100% {
-        transform: translateY(0px);
-    }
-}
-
-.animate-float {
-    animation: float 6s ease-in-out infinite;
-}
-</style>
-
 <script>
 document.addEventListener("DOMContentLoaded", function() {
 
-    // 1. SCROLLYTELLING LOGIC (Background Changer)
+    // 1. SCROLLYTELLING LOGIC
     const sections = document.querySelectorAll(".snap-section");
     const backgrounds = document.querySelectorAll("[id^='bg-']");
 
@@ -408,7 +436,7 @@ document.addEventListener("DOMContentLoaded", function() {
                 });
 
                 // Nyalakan background target (kecuali Hero/None)
-                if (targetBgId !== "none") {
+                if (targetBgId !== "none" && targetBgId) {
                     const activeBg = document.getElementById(targetBgId);
                     if (activeBg) {
                         activeBg.classList.remove("opacity-0");
@@ -416,21 +444,24 @@ document.addEventListener("DOMContentLoaded", function() {
                     }
                 }
 
-                // Animasi Teks Fade Up
+                // Animasi Teks
                 const textContent = entry.target.querySelector(".fade-up-enter");
                 if (textContent) textContent.classList.add("fade-up-active");
             }
         });
     }, {
         threshold: 0.4
-    }); // Trigger saat 40% masuk layar
+    });
     sections.forEach(sec => observer.observe(sec));
 
 
-    // 2. HERO SWIPER
+    // 2. HERO SWIPER (FIX GHOSTING: fadeEffect: { crossFade: true })
     new Swiper(".heroSwiper", {
         spaceBetween: 0,
-        effect: "fade", // Efek Fade antar slide
+        effect: "fade",
+        fadeEffect: {
+            crossFade: true
+        }, // ANTI GHOSTING
         loop: true,
         autoplay: {
             delay: 5000,
@@ -440,6 +471,7 @@ document.addEventListener("DOMContentLoaded", function() {
             el: ".swiper-pagination",
             clickable: true
         },
+        allowTouchMove: false,
     });
 
     // 3. CLIENT SWIPER
@@ -451,7 +483,7 @@ document.addEventListener("DOMContentLoaded", function() {
         autoplay: {
             delay: 0,
             disableOnInteraction: false
-        }, // Running Text effect
+        },
         breakpoints: {
             640: {
                 slidesPerView: 3
