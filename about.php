@@ -1,12 +1,11 @@
 <?php
 require 'config/database.php';
 require 'config/lang.php';
-
 $page_title = ($lang_code == 'en') ? "About Us - Ghania Creative" : "Tentang Kami - Ghania Creative";
 include 'includes/header.php';
 include 'includes/navbar.php';
 
-// --- DATA NASKAH ---
+// data keseluruhan tentang kami/about us
 $sections = [
     [
         'id' => 'identity',
@@ -75,7 +74,6 @@ body::-webkit-scrollbar {
 }
 
 /* LOGIC NAVBAR KHUSUS */
-
 .nav-link,
 .lang-link {
     color: #ffffff !important;

@@ -2,312 +2,486 @@
 require 'config/database.php';
 require 'config/lang.php';
 $page_title = ($lang_code == 'id') ? 'Beranda' : 'Home';
-// Setup SEO
+
+// Setup SEO & Header
 include 'includes/header.php';
 include 'includes/navbar.php';
 require 'config/tracker.php';
 record_visit($conn, 'home', 'Halaman Utama');
+
+// --- DATA BACKGROUND UNTUK SCROLLYTELLING (Section 2 ke bawah) ---
+// Section 1 (Hero) punya background sendiri di dalam Slidernya.
+$bg_sections = [
+    'about'     => 'https://images.unsplash.com/photo-1497215728101-856f4ea42174?q=80&w=1920&auto=format&fit=crop', // Office vibes (Clean)
+    'services'  => 'https://images.unsplash.com/photo-1550751827-4bd374c3f58b?q=80&w=1920&auto=format&fit=crop', // Tech/Cyberpunk vibes
+    'clients'   => 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=1920&auto=format&fit=crop', // Building/Corporate vibes
+    'articles'  => 'https://images.unsplash.com/photo-1519389950473-47ba0277781c?q=80&w=1920&auto=format&fit=crop', // Workspace/Coffee vibes
+];
 ?>
 
-<!-- section awal/carousel -->
-<section class="relative bg-gray-900 text-white py-32 lg:py-48 overflow-hidden">
-    <div class="absolute inset-0 z-0">
-        <img src="assets/img/hero-bg.png" alt="Background" class="w-full h-full object-cover opacity-30">
-        <div class="absolute inset-0 bg-gradient-to-r from-black/80 to-transparent"></div>
+<style>
+/* 1. HIDE SCROLLBAR */
+html,
+body {
+    scrollbar-width: none !important;
+    -ms-overflow-style: none !important;
+    overflow-y: scroll;
+    scroll-behavior: smooth;
+}
+
+body::-webkit-scrollbar {
+    display: none !important;
+}
+
+/* 2. NAVBAR OVERRIDE (Transparan ke 50% Dark) */
+.nav-link,
+.lang-link {
+    color: #ffffff !important;
+}
+
+.nav-link:hover,
+.lang-link:hover {
+    color: #FF6600 !important;
+}
+
+#nav-logo {
+    filter: brightness(0) invert(1) !important;
+}
+
+#navbar.bg-white\/95 {
+    background-color: rgba(0, 0, 0, 0.5) !important;
+    backdrop-filter: blur(8px) !important;
+    box-shadow: none !important;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1) !important;
+}
+
+#navbar {
+    transition: background-color 0.5s ease, padding 0.3s ease;
+}
+
+/* 3. ANIMASI TEKS */
+.fade-up-enter {
+    opacity: 0;
+    transform: translateY(40px);
+    transition: all 1s ease-out;
+}
+
+.fade-up-active {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* 4. SWIPER CUSTOM */
+.swiper-pagination-bullet {
+    background: white !important;
+    opacity: 0.5;
+}
+
+.swiper-pagination-bullet-active {
+    background: #FF6600 !important;
+    opacity: 1;
+}
+</style>
+
+<div class="fixed inset-0 w-full h-full z-0 bg-black">
+    <?php foreach ($bg_sections as $id => $img): ?>
+    <div id="bg-<?= $id ?>"
+        class="absolute inset-0 w-full h-full transition-opacity duration-1000 ease-in-out opacity-0">
+        <img src="<?= $img ?>" class="w-full h-full object-cover">
+        <div class="absolute inset-0 bg-gradient-to-r from-black/90 via-black/70 to-black/40"></div>
     </div>
+    <?php endforeach; ?>
+</div>
 
-    <div class="container mx-auto px-4 relative z-10">
-        <div class="max-w-3xl">
-            <div class="border-l-4 border-ghania-orange pl-6">
-                <h1 class="text-4xl md:text-6xl font-bold leading-tight mb-6">
-                    “Simplified Your <br> Business Problems”
-                </h1>
-                <p class="text-xl md:text-2xl text-gray-300 font-light mb-8">
-                    Ghania Creative Indonesia
-                    <?= $t['txt_sejak'] ?> 2021 <br>
-                    <span class="text-sm opacity-80">
-                        <?= $t['txt_business'] ?>
-                    </span>
-                </p>
+<div class="relative z-10">
 
-                <a href="https://wa.me/6285158023383"
-                    class="inline-block bg-ghania-orange text-white font-semibold px-8 py-3 rounded-md hover:bg-orange-700 transition shadow-lg transform hover:-translate-y-1">
-                    <?= $t['btn_consult'] ?>
-                </a>
-            </div>
-        </div>
-    </div>
-</section>
-
-<!-- section about us -->
-<section class="py-20 bg-white">
-    <div class="container mx-auto px-4">
-        <div class="text-center mb-12">
-            <h2 class="text-4xl font-bold text-ghania-orange mb-2">Ghania</h2>
-            <p class="text-gray-500">Creative Indonesia</p>
-        </div>
-        <div class="text-center">
-            <p class="max-w-2xl mx-auto text-gray-600 mb-8">
-                <?= $t['txt_about'] ?>
-            </p>
-            <a href="about.php" class="text-ghania-orange font-semibold hover:underline"><?= $t['btn_read_more'] ?>
-                &rarr;</a>
-        </div>
-    </div>
-</section>
-
-<!-- section our services -->
-<section id="services" class="py-20 bg-gray-50">
-    <div class="container mx-auto px-4 text-center">
-        <h2 class="text-3xl md:text-4xl font-bold mb-4 text-ghania-dark"><?= $t['nav_services'] ?></h2>
-        <p class="text-gray-500 mb-12 max-w-2xl mx-auto">
-            <?= ($lang_code == 'id') ? 'Solusi digital terbaik untuk pertumbuhan bisnis Anda' : 'The best digital solutions for your business growth' ?>
-        </p>
-
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <?php
-            // Icon Monitor (Website)
-            $icon_web = '<svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>';
-
-            // Icon Smartphone (Mobile Apps)
-            $icon_app = '<svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z"></path></svg>';
-
-            // Icon Megaphone/Speaker (Social Media)
-            $icon_socmed = '<svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5.882V19.24a1.76 1.76 0 01-3.417.592l-2.147-6.15M18 13a3 3 0 100-6M5.436 13.683A4.001 4.001 0 017 6h1.832c4.1 0 7.625-1.234 9.168-3v14c-1.543-1.766-5.067-3-9.168-3H7a3.988 3.988 0 01-1.564-.317z"></path></svg>';
-
-            // Icon Default
-            $icon_default = '<svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>';
-
-            $sql = "SELECT * FROM services";
-            $result = $conn->query($sql);
-
-            if ($result && $result->num_rows > 0):
-                while ($row = $result->fetch_assoc()):
-                    $title = ($lang_code == 'id') ? $row['title_id'] : $row['title_en'];
-                    $brief = ($lang_code == 'id') ? $row['brief_id'] : $row['brief_en'];
-
-                    // logic select svg icon
-                    $check_title = strtolower($row['title_en']);
-
-                    if (strpos($check_title, 'website') !== false || strpos($check_title, 'web') !== false) {
-                        $current_icon = $icon_web;
-                    } elseif (strpos($check_title, 'mobile') !== false || strpos($check_title, 'app') !== false) {
-                        $current_icon = $icon_app;
-                    } elseif (strpos($check_title, 'social') !== false || strpos($check_title, 'sosial') !== false) {
-                        $current_icon = $icon_socmed;
-                    } else {
-                        $current_icon = $icon_default;
-                    }
-            ?>
-
-            <div
-                class="bg-white p-8 rounded-xl shadow-lg hover:shadow-2xl transition duration-300 border-t-4 border-ghania-orange group flex flex-col h-full transform hover:-translate-y-2">
-                <div
-                    class="w-16 h-16 bg-orange-50 rounded-full flex items-center justify-center mx-auto mb-6 text-ghania-orange group-hover:bg-ghania-orange group-hover:text-white transition duration-300">
-                    <?= $current_icon ?>
-                </div>
-
-                <h3 class="text-xl font-bold mb-3 text-ghania-dark"><?= $title ?></h3>
-                <p class="text-gray-600 mb-6 text-sm flex-grow leading-relaxed">
-                    <?= substr($brief, 0, 100) . '...' ?>
-                </p>
-
-                <a href="service.php?slug=<?= $row['slug'] ?>"
-                    class="inline-block text-ghania-orange font-semibold hover:tracking-wide transition-all group-hover:underline">
-                    <?= $t['btn_read_more'] ?> &rarr;
-                </a>
-            </div>
-
-            <?php
-                endwhile;
-            else:
-                echo "<p class='col-span-3 text-gray-500'>Belum ada layanan tersedia.</p>";
-            endif;
-            ?>
-        </div>
-
-        <div class="mt-16">
-            <a href="https://wa.me/6285158023383" target="_blank"
-                class="inline-flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-full text-white bg-green-600 hover:bg-green-700 md:py-4 md:text-lg shadow-lg hover:shadow-xl transition transform hover:-translate-y-1">
-                <svg class="w-6 h-6 mr-2" fill="currentColor" viewBox="0 0 24 24">
-                    <path
-                        d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z" />
-                </svg>
-                <?= $t['btn_consult'] ?>
-            </a>
-        </div>
-    </div>
-</section>
-
-<!-- section our clients logo -->
-<section class="py-16 bg-white border-t border-gray-100">
-    <div class="container mx-auto px-4 mb-10 text-center">
-        <h2 class="text-3xl font-bold text-ghania-dark"><?= $t['title_clients'] ?></h2>
-        <div class="w-16 h-1 bg-ghania-orange mx-auto mt-2 rounded"></div>
-    </div>
-
-    <div class="container mx-auto px-4">
-        <div class="swiper clientSwiper px-4">
-            <div class="swiper-wrapper items-center">
-                <?php for ($i = 1; $i <= 20; $i++): ?>
-                <div class="swiper-slide flex justify-center items-center p-4">
-                    <div
-                        class="grayscale opacity-40 hover:grayscale-0 hover:opacity-100 transition-all duration-500 cursor-pointer transform hover:scale-110">
-                        <img src="assets/img/clients/client-<?= $i ?>.png" alt="Client <?= $i ?>"
-                            class="h-16 md:h-16 w-auto object-contain"
-                            onerror="this.src='https://via.placeholder.com/150x50?text=CLIENT+<?= $i ?>'; this.className='h-8 object-contain opacity-50';">
-                    </div>
-                </div>
-                <?php endfor; ?>
-            </div>
-        </div>
-    </div>
-</section>
-
-<!-- section artikel -->
-<section class="py-20 bg-gray-50 relative">
-    <div class="container mx-auto px-4">
-        <div class="flex justify-between items-end mb-12">
-            <div>
-                <h2 class="text-3xl font-bold text-ghania-dark mb-2"><?= $t['title_latest_articles'] ?></h2>
-                <p class="text-gray-500">
-                    <?= $t['txt_articles'] ?>
-                </p>
-            </div>
-            <a href="articles.php"
-                class="hidden md:inline-flex items-center text-ghania-orange font-semibold hover:underline">
-                <?= $t['btn_all_articles'] ?> &rarr;
-            </a>
-        </div>
-
-        <div class="swiper articleSwiper pb-12">
+    <section class="relative h-screen w-full overflow-hidden bg-black snap-section" data-target="none">
+        <div class="swiper heroSwiper h-full w-full">
             <div class="swiper-wrapper">
-                <?php
-                // mengambil 5 artikel terbaru
-                $sql_art = "SELECT * FROM articles ORDER BY created_at DESC LIMIT 5";
-                $res_art = $conn->query($sql_art);
 
-                if ($res_art && $res_art->num_rows > 0):
-                    while ($row = $res_art->fetch_assoc()):
-                        // --- FIX LOGIC BAHASA ---
-                        if ($lang_code == 'en' && !empty($row['title_en'])) {
-                            $raw_title = $row['title_en'];
-                            $raw_content = $row['content_en'];
-                        } else {
-                            $raw_title = $row['title_id'];
-                            $raw_content = $row['content_id'];
-                        }
-
-                        // --- FIX CLEANING DATA ---
-                        $display_title = stripslashes($raw_title);
-                        $clean_text = strip_tags($raw_content);
-                        $clean_text = str_replace(['\r\n', '\r', '\n', '\\'], ' ', $clean_text);
-                        $clean_excerpt = substr($clean_text, 0, 100) . '...';
-
-                        // in case thumbnail kosong
-                        $thumb = !empty($row['thumbnail']) ? $row['thumbnail'] : 'https://via.placeholder.com/800x450?text=No+Image';
-                ?>
-                <div class="swiper-slide h-auto">
-                    <div
-                        class="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-xl transition duration-300 h-full flex flex-col group">
-                        <div class="relative h-48 overflow-hidden">
-                            <img src="<?= $thumb ?>" alt="<?= $display_title ?>"
-                                class="w-full h-full object-cover transform group-hover:scale-110 transition duration-500">
-                            <div
-                                class="absolute top-4 left-4 bg-ghania-orange text-white text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider">
-                                Blog
-                            </div>
-                        </div>
-
-                        <div class="p-6 flex flex-col flex-grow">
-                            <div class="text-xs text-gray-400 mb-2 flex items-center">
-                                <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z">
-                                    </path>
-                                </svg>
-                                <?= date('d M Y', strtotime($row['created_at'])) ?>
-                            </div>
-                            <h3
-                                class="text-lg font-bold text-ghania-dark mb-3 line-clamp-2 group-hover:text-ghania-orange transition">
-                                <a href="article-detail.php?slug=<?= $row['slug'] ?>">
-                                    <?= $display_title ?>
+                <div class="swiper-slide relative">
+                    <div class="absolute inset-0">
+                        <img src="assets/img/hero-bg.png" class="w-full h-full object-cover opacity-60">
+                        <div class="absolute inset-0 bg-gradient-to-r from-black via-black/50 to-transparent"></div>
+                    </div>
+                    <div class="relative z-10 container mx-auto px-6 h-full flex flex-col justify-center">
+                        <div class="max-w-4xl fade-up-active">
+                            <div class="border-l-8 border-ghania-orange pl-8">
+                                <h1
+                                    class="text-4xl md:text-6xl lg:text-7xl text-white font-bold italic mb-4 leading-tight">
+                                    "Bringing your local potential to global impact"
+                                </h1>
+                                <h2 class="text-2xl md:text-3xl text-gray-300 font-light mb-2">
+                                    Ghania Creative Indonesia
+                                </h2>
+                                <p class="text-gray-400 text-lg mb-8 tracking-wider uppercase">
+                                    <?= ($lang_code == 'id') ? 'Digital Creative Agency Sejak 2021' : 'Digital Creative Agency Since 2021' ?>
+                                </p>
+                                <a href="https://wa.me/6281234567890" target="_blank"
+                                    class="inline-block bg-ghania-orange text-white font-bold px-8 py-4 rounded-xl hover:bg-orange-600 transition shadow-lg transform hover:-translate-y-1">
+                                    <?= $t['btn_consult'] ?>
                                 </a>
-                            </h3>
-                            <p class="text-gray-500 text-sm line-clamp-3 mb-4 flex-grow">
-                                <?= $clean_excerpt ?>
-                            </p>
-                            <a href="article-detail.php?slug=<?= $row['slug'] ?>"
-                                class="text-ghania-orange font-semibold text-sm hover:underline mt-auto">
-                                <?= $t['btn_read_more'] ?>
-                            </a>
+                            </div>
                         </div>
                     </div>
                 </div>
-                <?php
-                    endwhile;
-                else:
-                    echo "<div class='text-center w-full py-10 text-gray-500'>Belum ada artikel.</div>";
-                endif;
-                ?>
+
+                <div class="swiper-slide relative">
+                    <div class="absolute inset-0">
+                        <img src="https://images.unsplash.com/photo-1461749280684-dccba630e2f6?q=80&w=1920&auto=format&fit=crop"
+                            class="w-full h-full object-cover">
+                        <div class="absolute inset-0 bg-black/70"></div>
+                    </div>
+                    <div
+                        class="relative z-10 container mx-auto px-6 h-full flex items-center justify-center text-center">
+                        <div class="max-w-3xl">
+                            <h2 class="text-4xl md:text-6xl font-bold text-white mb-6">Website Development</h2>
+                            <p class="text-xl text-gray-300 mb-8 leading-relaxed">
+                                <?= ($lang_code == 'id')
+                                    ? "Bangun identitas digital profesional dengan website yang cepat, responsif, dan elegan. Dari Company Profile hingga E-Commerce."
+                                    : "Build a professional digital identity with fast, responsive, and elegant websites. From Company Profiles to E-Commerce." ?>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="swiper-slide relative">
+                    <div class="absolute inset-0">
+                        <img src="https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?q=80&w=1920&auto=format&fit=crop"
+                            class="w-full h-full object-cover">
+                        <div class="absolute inset-0 bg-black/70"></div>
+                    </div>
+                    <div
+                        class="relative z-10 container mx-auto px-6 h-full flex items-center justify-center text-center">
+                        <div class="max-w-3xl">
+                            <h2 class="text-4xl md:text-6xl font-bold text-white mb-6">Mobile Apps Development</h2>
+                            <p class="text-xl text-gray-300 mb-8 leading-relaxed">
+                                <?= ($lang_code == 'id')
+                                    ? "Ubah ide brilian Anda menjadi aplikasi Android & iOS yang powerful dan user-friendly."
+                                    : "Transform your brilliant ideas into powerful and user-friendly Android & iOS applications." ?>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="swiper-slide relative">
+                    <div class="absolute inset-0">
+                        <img src="https://images.unsplash.com/photo-1611162617474-5b21e879e113?q=80&w=1920&auto=format&fit=crop"
+                            class="w-full h-full object-cover">
+                        <div class="absolute inset-0 bg-black/70"></div>
+                    </div>
+                    <div
+                        class="relative z-10 container mx-auto px-6 h-full flex items-center justify-center text-center">
+                        <div class="max-w-3xl">
+                            <h2 class="text-4xl md:text-6xl font-bold text-white mb-6">Social Media Management</h2>
+                            <p class="text-xl text-gray-300 mb-8 leading-relaxed">
+                                <?= ($lang_code == 'id')
+                                    ? "Tingkatkan engagement dan brand awareness bisnis Anda dengan strategi konten kreatif."
+                                    : "Boost engagement and brand awareness for your business with creative content strategies." ?>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
             </div>
             <div class="swiper-pagination"></div>
         </div>
+    </section>
 
-        <div class="mt-8 text-center md:hidden">
-            <a href="articles.php"
-                class="inline-block border border-ghania-orange text-ghania-orange px-6 py-2 rounded-full font-semibold hover:bg-ghania-orange hover:text-white transition">
-                <?= $t['btn_all_articles'] ?>
-            </a>
+    <section id="sec-about" class="min-h-screen flex items-center snap-section relative" data-target="bg-about">
+        <div class="container mx-auto px-6 md:px-12">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center fade-up-enter">
+
+                <div class="flex justify-center lg:justify-end">
+                    <div class="relative w-64 h-64 md:w-96 md:h-96">
+                        <div class="absolute inset-0 bg-ghania-orange/20 blur-[100px] rounded-full"></div>
+                        <img src="assets/img/logo-ghania-3d.PNG" alt="Ghania 3D Logo"
+                            class="relative w-full h-full object-contain animate-float drop-shadow-2xl filter brightness-110">
+                    </div>
+                </div>
+
+                <div class="text-white text-center lg:text-left">
+                    <span class="text-ghania-orange font-bold tracking-widest uppercase mb-2 block">Who We Are</span>
+                    <h2 class="text-4xl md:text-5xl font-bold mb-6 leading-tight">Ghania Creative<br>Indonesia</h2>
+                    <p class="text-gray-200 text-lg leading-relaxed mb-8 font-light">
+                        <?= ($lang_code == 'id')
+                            ? "Ghania Creative Indonesia merupakan sebuah perusahaan <b>Digital Creative Agency</b> yang memiliki layanan utama dalam Mobile Apps Development, Website Development, dan Social Media Management. Kami lahir untuk mendigitalisasi potensi lokal menuju dampak global."
+                            : "Ghania Creative Indonesia is a <b>Digital Creative Agency</b> specializing in Mobile Apps Development, Website Development, and Social Media Management. We were born to digitalize local potential for global impact." ?>
+                    </p>
+                    <a href="about.php"
+                        class="inline-flex items-center text-white border-b-2 border-ghania-orange pb-1 hover:text-ghania-orange transition-all font-semibold text-lg group">
+                        <?= $t['btn_read_more'] ?>
+                        <svg class="w-5 h-5 ml-2 transform group-hover:translate-x-2 transition" fill="none"
+                            stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+                        </svg>
+                    </a>
+                </div>
+
+            </div>
         </div>
+    </section>
+
+    <section id="sec-services" class="min-h-screen flex items-center py-20 snap-section" data-target="bg-services">
+        <div class="container mx-auto px-6 fade-up-enter">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl md:text-5xl font-bold text-white mb-4"><?= $t['nav_services'] ?></h2>
+                <div class="w-24 h-1 bg-ghania-orange mx-auto rounded"></div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <?php
+                // Logic Icon (Sama seperti sebelumnya)
+                $icon_web = '<svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>';
+                $icon_app = '<svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z"></path></svg>';
+                $icon_socmed = '<svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5.882V19.24a1.76 1.76 0 01-3.417.592l-2.147-6.15M18 13a3 3 0 100-6M5.436 13.683A4.001 4.001 0 017 6h1.832c4.1 0 7.625-1.234 9.168-3v14c-1.543-1.766-5.067-3-9.168-3H7a3.988 3.988 0 01-1.564-.317z"></path></svg>';
+                $icon_default = '<svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>';
+
+                $result = $conn->query("SELECT * FROM services");
+                if ($result && $result->num_rows > 0):
+                    while ($row = $result->fetch_assoc()):
+                        $title = ($lang_code == 'id') ? $row['title_id'] : $row['title_en'];
+                        $brief = ($lang_code == 'id') ? $row['brief_id'] : $row['brief_en'];
+
+                        $check_title = strtolower($row['title_en']);
+                        if (strpos($check_title, 'website') !== false) $current_icon = $icon_web;
+                        elseif (strpos($check_title, 'mobile') !== false) $current_icon = $icon_app;
+                        elseif (strpos($check_title, 'social') !== false) $current_icon = $icon_socmed;
+                        else $current_icon = $icon_default;
+                ?>
+                <div
+                    class="bg-white/10 backdrop-blur-md border border-white/20 p-8 rounded-2xl hover:bg-white/20 transition duration-300 group hover:-translate-y-2 flex flex-col h-full">
+                    <div
+                        class="w-16 h-16 bg-ghania-orange/20 rounded-full flex items-center justify-center mb-6 text-ghania-orange group-hover:bg-ghania-orange group-hover:text-white transition-all">
+                        <?= $current_icon ?>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3 text-white"><?= $title ?></h3>
+                    <p class="text-gray-300 text-sm mb-6 flex-grow leading-relaxed">
+                        <?= substr($brief, 0, 100) . '...' ?>
+                    </p>
+                    <a href="service.php?slug=<?= $row['slug'] ?>"
+                        class="inline-flex items-center text-ghania-orange font-semibold hover:text-white transition">
+                        <?= $t['btn_read_more'] ?> <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor"
+                            viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7">
+                            </path>
+                        </svg>
+                    </a>
+                </div>
+                <?php endwhile;
+                endif; ?>
+            </div>
+        </div>
+    </section>
+
+    <section id="sec-clients" class="min-h-[50vh] flex items-center py-20 snap-section" data-target="bg-clients">
+        <div class="container mx-auto px-6 fade-up-enter text-center">
+            <h2 class="text-3xl font-bold text-white mb-10 uppercase tracking-widest"><?= $t['title_clients'] ?></h2>
+
+            <div class="bg-white/10 backdrop-blur-md rounded-3xl p-8 border border-white/10">
+                <div class="swiper clientSwiper">
+                    <div class="swiper-wrapper items-center">
+                        <?php for ($i = 1; $i <= 20; $i++): ?>
+                        <div class="swiper-slide flex justify-center p-4">
+                            <img src="assets/img/clients/client-<?= $i ?>.png"
+                                class="h-12 w-auto object-contain filter brightness-0 invert opacity-60 hover:opacity-100 hover:scale-110 transition duration-300"
+                                onerror="this.style.display='none'">
+                        </div>
+                        <?php endfor; ?>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="sec-articles" class="min-h-screen flex items-center py-20 snap-section" data-target="bg-articles">
+        <div class="container mx-auto px-6 fade-up-enter">
+            <div class="flex flex-col md:flex-row justify-between items-end mb-12">
+                <div>
+                    <h2 class="text-4xl font-bold text-white mb-2"><?= $t['title_latest_articles'] ?></h2>
+                    <p class="text-gray-300"><?= $t['txt_articles'] ?></p>
+                </div>
+                <a href="articles.php"
+                    class="hidden md:inline-flex items-center text-ghania-orange font-semibold hover:text-white mt-4 md:mt-0 transition">
+                    <?= $t['btn_all_articles'] ?> &rarr;
+                </a>
+            </div>
+
+            <div class="swiper articleSwiper pb-12">
+                <div class="swiper-wrapper">
+                    <?php
+                    $res_art = $conn->query("SELECT * FROM articles ORDER BY created_at DESC LIMIT 5");
+                    if ($res_art && $res_art->num_rows > 0):
+                        while ($row = $res_art->fetch_assoc()):
+                            if ($lang_code == 'en' && !empty($row['title_en'])) {
+                                $d_title = $row['title_en'];
+                                $d_content = $row['content_en'];
+                            } else {
+                                $d_title = $row['title_id'];
+                                $d_content = $row['content_id'];
+                            }
+                            $thumb = !empty($row['thumbnail']) ? $row['thumbnail'] : 'https://via.placeholder.com/800x450';
+                    ?>
+                    <div class="swiper-slide h-auto">
+                        <div
+                            class="bg-white/10 backdrop-blur-md border border-white/20 rounded-xl overflow-hidden hover:bg-white/20 transition duration-300 h-full flex flex-col group">
+                            <div class="relative h-48 overflow-hidden">
+                                <img src="<?= $thumb ?>"
+                                    class="w-full h-full object-cover transform group-hover:scale-110 transition duration-500">
+                                <div
+                                    class="absolute top-4 left-4 bg-ghania-orange text-white text-xs font-bold px-3 py-1 rounded-full uppercase">
+                                    Blog</div>
+                            </div>
+                            <div class="p-6 flex flex-col flex-grow">
+                                <div class="text-xs text-gray-400 mb-2">
+                                    <?= date('d M Y', strtotime($row['created_at'])) ?></div>
+                                <h3
+                                    class="text-lg font-bold text-white mb-3 line-clamp-2 group-hover:text-ghania-orange transition">
+                                    <a href="article-detail.php?slug=<?= $row['slug'] ?>"><?= $d_title ?></a>
+                                </h3>
+                                <p class="text-gray-400 text-sm line-clamp-3 mb-4 flex-grow">
+                                    <?= substr(strip_tags($d_content), 0, 100) . '...' ?>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <?php endwhile;
+                    endif; ?>
+                </div>
+                <div class="swiper-pagination"></div>
+            </div>
+
+            <div class="text-center md:hidden mt-6">
+                <a href="articles.php"
+                    class="inline-block border border-ghania-orange text-ghania-orange px-6 py-2 rounded-full font-semibold hover:bg-ghania-orange hover:text-white transition">
+                    <?= $t['btn_all_articles'] ?>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <div class="bg-ghania-dark relative z-20">
+        <?php include 'includes/footer.php'; ?>
     </div>
-</section>
+
+</div>
 
 <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
-<script>
-var swiperClient = new Swiper(".clientSwiper", {
-    slidesPerView: 2,
-    spaceBetween: 20,
-    loop: true,
-    speed: 3000,
-    autoplay: {
-        delay: 0,
-        disableOnInteraction: false,
-    },
-    breakpoints: {
-        640: {
-            slidesPerView: 3,
-            spaceBetween: 30
-        },
-        768: {
-            slidesPerView: 4,
-            spaceBetween: 40
-        },
-        1024: {
-            slidesPerView: 5,
-            spaceBetween: 50
-        },
-    },
-    allowTouchMove: false,
-});
 
-var swiperArt = new Swiper(".articleSwiper", {
-    slidesPerView: 1,
-    spaceBetween: 30,
-    pagination: {
-        el: ".swiper-pagination",
-        clickable: true,
-        dynamicBullets: true,
-    },
-    breakpoints: {
-        640: {
-            slidesPerView: 2
+<style>
+@keyframes float {
+    0% {
+        transform: translateY(0px);
+    }
+
+    50% {
+        transform: translateY(-20px);
+    }
+
+    100% {
+        transform: translateY(0px);
+    }
+}
+
+.animate-float {
+    animation: float 6s ease-in-out infinite;
+}
+</style>
+
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+
+    // 1. SCROLLYTELLING LOGIC (Background Changer)
+    const sections = document.querySelectorAll(".snap-section");
+    const backgrounds = document.querySelectorAll("[id^='bg-']");
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+                const targetBgId = entry.target.getAttribute("data-target");
+
+                // Matikan semua background
+                backgrounds.forEach(bg => {
+                    bg.classList.remove("opacity-100");
+                    bg.classList.add("opacity-0");
+                });
+
+                // Nyalakan background target (kecuali Hero/None)
+                if (targetBgId !== "none") {
+                    const activeBg = document.getElementById(targetBgId);
+                    if (activeBg) {
+                        activeBg.classList.remove("opacity-0");
+                        activeBg.classList.add("opacity-100");
+                    }
+                }
+
+                // Animasi Teks Fade Up
+                const textContent = entry.target.querySelector(".fade-up-enter");
+                if (textContent) textContent.classList.add("fade-up-active");
+            }
+        });
+    }, {
+        threshold: 0.4
+    }); // Trigger saat 40% masuk layar
+    sections.forEach(sec => observer.observe(sec));
+
+
+    // 2. HERO SWIPER
+    new Swiper(".heroSwiper", {
+        spaceBetween: 0,
+        effect: "fade", // Efek Fade antar slide
+        loop: true,
+        autoplay: {
+            delay: 5000,
+            disableOnInteraction: false
         },
-        1024: {
-            slidesPerView: 3
+        pagination: {
+            el: ".swiper-pagination",
+            clickable: true
         },
-    },
+    });
+
+    // 3. CLIENT SWIPER
+    new Swiper(".clientSwiper", {
+        slidesPerView: 2,
+        spaceBetween: 30,
+        loop: true,
+        speed: 3000,
+        autoplay: {
+            delay: 0,
+            disableOnInteraction: false
+        }, // Running Text effect
+        breakpoints: {
+            640: {
+                slidesPerView: 3
+            },
+            768: {
+                slidesPerView: 4
+            },
+            1024: {
+                slidesPerView: 5
+            },
+        },
+        allowTouchMove: false,
+    });
+
+    // 4. ARTICLE SWIPER
+    new Swiper(".articleSwiper", {
+        slidesPerView: 1,
+        spaceBetween: 30,
+        pagination: {
+            el: ".swiper-pagination",
+            clickable: true
+        },
+        breakpoints: {
+            640: {
+                slidesPerView: 2
+            },
+            1024: {
+                slidesPerView: 3
+            },
+        },
+    });
 });
 </script>
-
-<?php include 'includes/footer.php'; ?>
