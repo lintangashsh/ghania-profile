@@ -118,11 +118,11 @@ body::-webkit-scrollbar {
 </div>
 
 <div class="relative z-10">
-
+    <!-- section carousel -->
     <section class="relative h-screen w-full overflow-hidden bg-black snap-section" data-target="none">
         <div class="swiper heroSwiper h-full w-full">
             <div class="swiper-wrapper">
-
+                <!-- carousel 1 -->
                 <div class="swiper-slide relative bg-black">
                     <div class="absolute inset-0">
                         <img src="assets/img/hero-bg.png" class="w-full h-full object-cover opacity-60">
@@ -149,7 +149,7 @@ body::-webkit-scrollbar {
                         </div>
                     </div>
                 </div>
-
+                <!-- carousel 2 -->
                 <div class="swiper-slide relative bg-black">
                     <div class="absolute inset-0">
                         <img src="https://images.unsplash.com/photo-1461749280684-dccba630e2f6?q=80&w=1920&auto=format&fit=crop"
@@ -176,7 +176,7 @@ body::-webkit-scrollbar {
                         </div>
                     </div>
                 </div>
-
+                <!-- carousel 3 -->
                 <div class="swiper-slide relative bg-black">
                     <div class="absolute inset-0">
                         <img src="https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?q=80&w=1920&auto=format&fit=crop"
@@ -203,7 +203,7 @@ body::-webkit-scrollbar {
                         </div>
                     </div>
                 </div>
-
+                <!-- carousel 4 -->
                 <div class="swiper-slide relative bg-black">
                     <div class="absolute inset-0">
                         <img src="https://images.unsplash.com/photo-1611162617474-5b21e879e113?q=80&w=1920&auto=format&fit=crop"
@@ -236,11 +236,12 @@ body::-webkit-scrollbar {
         </div>
     </section>
 
+    <!-- section about us/tentang kami -->
     <section id="sec-about" class="min-h-screen flex items-center snap-section relative" data-target="bg-about">
         <div class="container mx-auto px-6 md:px-12">
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center fade-up-enter">
+            <div class="grid grid-cols-1 lg:grid-cols-2 lg:gap-32 items-center fade-up-enter">
 
-                <div class="flex justify-center lg:justify-end order-1 lg:order-1">
+                <div class="flex justify-center lg:justify-end order-1 lg:order-1 lg:pr-24">
                     <div class="relative w-64 h-64 md:w-96 md:h-96">
                         <div class="absolute inset-0 bg-ghania-orange/20 blur-[100px] rounded-full"></div>
                         <img src="assets/img/logo-ghania-3d.PNG" alt="Ghania 3D Logo"
@@ -248,7 +249,7 @@ body::-webkit-scrollbar {
                     </div>
                 </div>
 
-                <div class="text-white text-center lg:text-left order-2 lg:order-2">
+                <div class="text-white text-center lg:text-left order-2 lg:order-2 lg:pl-14">
                     <span class="text-ghania-orange font-bold tracking-widest uppercase mb-2 block">Who We Are</span>
                     <h2 class="text-4xl md:text-5xl font-bold mb-6 leading-tight">Ghania Creative<br>Indonesia</h2>
                     <p class="text-gray-300 text-lg leading-relaxed mb-8 font-light">
@@ -271,6 +272,7 @@ body::-webkit-scrollbar {
         </div>
     </section>
 
+    <!-- section our services/layanan kami -->
     <section id="sec-services" class="min-h-screen flex items-center py-20 snap-section" data-target="bg-services">
         <div class="container mx-auto px-6 fade-up-enter">
             <div class="text-center mb-16">
@@ -323,6 +325,7 @@ body::-webkit-scrollbar {
         </div>
     </section>
 
+    <!-- section out clients/klien kami -->
     <section id="sec-clients" class="min-h-[60vh] flex items-center py-20 snap-section" data-target="bg-clients">
         <div class="container mx-auto px-6 fade-up-enter text-center">
             <h2 class="text-3xl font-bold text-white mb-10 uppercase tracking-widest"><?= $t['title_clients'] ?></h2>
@@ -343,6 +346,7 @@ body::-webkit-scrollbar {
         </div>
     </section>
 
+    <!-- section artikel/articles -->
     <section id="sec-articles" class="min-h-screen flex items-center py-20 snap-section" data-target="bg-articles">
         <div class="container mx-auto px-6 fade-up-enter">
             <div class="flex flex-col md:flex-row justify-between items-end mb-12">
