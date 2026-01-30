@@ -2,26 +2,22 @@
 require 'config/database.php';
 require 'config/lang.php';
 $page_title = ($lang_code == 'id') ? 'Beranda' : 'Home';
-
-// Setup SEO & Header
 include 'includes/header.php';
 include 'includes/navbar.php';
 require 'config/tracker.php';
 record_visit($conn, 'home', 'Halaman Utama');
 
-// --- DATA BACKGROUND UNTUK SCROLLYTELLING (Section 2 ke bawah) ---
-// Section 1 (Hero) punya background sendiri di dalam Slidernya.
-// Section 2 (About) dibiarkan transparan/hitam agar fokus ke konten.
+// DATA BACKGROUND UNTUK SCROLLYTELLING
 $bg_sections = [
-    'about'     => '', // Kosongkan agar background hitam default (sesuai request)
-    'services'  => 'https://images.unsplash.com/photo-1550751827-4bd374c3f58b?q=80&w=1920&auto=format&fit=crop', // Tech vibes
-    'clients'   => 'https://images.unsplash.com/photo-1497366216548-37526070297c?q=80&w=1920&auto=format&fit=crop', // Corporate vibes
-    'articles'  => 'https://images.unsplash.com/photo-1519389950473-47ba0277781c?q=80&w=1920&auto=format&fit=crop', // Coffee/Read vibes
+    'about'     => '',
+    'services'  => 'https://images.unsplash.com/photo-1550751827-4bd374c3f58b?q=80&w=1920&auto=format&fit=crop',
+    'clients'   => 'https://images.unsplash.com/photo-1497366216548-37526070297c?q=80&w=1920&auto=format&fit=crop',
+    'articles'  => 'https://images.unsplash.com/photo-1519389950473-47ba0277781c?q=80&w=1920&auto=format&fit=crop',
 ];
 ?>
 
 <style>
-/* 1. HIDE SCROLLBAR */
+/* HIDE SCROLLBAR */
 html,
 body {
     scrollbar-width: none !important;
@@ -29,14 +25,13 @@ body {
     overflow-y: scroll;
     scroll-behavior: smooth;
     background-color: black;
-    /* Default BG */
 }
 
 body::-webkit-scrollbar {
     display: none !important;
 }
 
-/* 2. NAVBAR OVERRIDE (Transparan ke 50% Dark saat scroll) */
+/* NAVBAR OVERRIDE (Transparan ke 50% Dark saat scroll) */
 .nav-link,
 .lang-link {
     color: #ffffff !important;
@@ -62,7 +57,7 @@ body::-webkit-scrollbar {
     transition: background-color 0.5s ease, padding 0.3s ease;
 }
 
-/* 3. ANIMASI TEKS */
+/* ANIMASI TEKS */
 .fade-up-enter {
     opacity: 0;
     transform: translateY(40px);
@@ -74,7 +69,7 @@ body::-webkit-scrollbar {
     transform: translateY(0);
 }
 
-/* 4. SWIPER CUSTOM */
+/* SWIPER CUSTOM */
 .swiper-pagination-bullet {
     background: white !important;
     opacity: 0.5;
@@ -85,7 +80,7 @@ body::-webkit-scrollbar {
     opacity: 1;
 }
 
-/* 5. FLOATING ANIMATION (Untuk Logo 3D) */
+/* FLOATING ANIMATION (Untuk Logo 3D) */
 @keyframes float {
     0% {
         transform: translateY(0px);
@@ -125,7 +120,7 @@ body::-webkit-scrollbar {
                 <!-- carousel 1 -->
                 <div class="swiper-slide relative bg-black">
                     <div class="absolute inset-0">
-                        <img src="assets/img/hero-bg.png" class="w-full h-full object-cover opacity-60">
+                        <img src="assets/img/slider/slider-1.png" class="w-full h-full object-cover opacity-80">
                         <div class="absolute inset-0 bg-gradient-to-r from-black via-black/50 to-transparent"></div>
                     </div>
                     <div class="relative z-10 container mx-auto px-6 h-full flex flex-col justify-center">
@@ -152,8 +147,7 @@ body::-webkit-scrollbar {
                 <!-- carousel 2 -->
                 <div class="swiper-slide relative bg-black">
                     <div class="absolute inset-0">
-                        <img src="https://images.unsplash.com/photo-1461749280684-dccba630e2f6?q=80&w=1920&auto=format&fit=crop"
-                            class="w-full h-full object-cover opacity-50">
+                        <img src="assets/img/slider/slider-2.png" class="w-full h-full object-cover opacity-40">
                         <div class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-black/30"></div>
                     </div>
                     <div
@@ -170,8 +164,8 @@ body::-webkit-scrollbar {
                             <h2 class="text-4xl md:text-6xl font-bold text-white mb-6">Website Development</h2>
                             <p class="text-xl text-gray-300 mb-8 leading-relaxed">
                                 <?= ($lang_code == 'id')
-                                    ? "Bangun identitas digital profesional dengan website yang cepat, responsif, dan elegan. Dari Company Profile hingga E-Commerce."
-                                    : "Build a professional digital identity with fast, responsive, and elegant websites. From Company Profiles to E-Commerce." ?>
+                                    ? "Bangun identitas digital profesional dengan website yang cepat, responsif, dan elegan. Dari Company Profile hingga E-Commerce"
+                                    : "Build a professional digital identity with fast, responsive, and elegant websites. From Company Profiles to E-Commerce" ?>
                             </p>
                         </div>
                     </div>
@@ -179,8 +173,7 @@ body::-webkit-scrollbar {
                 <!-- carousel 3 -->
                 <div class="swiper-slide relative bg-black">
                     <div class="absolute inset-0">
-                        <img src="https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?q=80&w=1920&auto=format&fit=crop"
-                            class="w-full h-full object-cover opacity-50">
+                        <img src="assets/img/slider/slider-3.png" class="w-full h-full object-cover opacity-40">
                         <div class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-black/30"></div>
                     </div>
                     <div
@@ -197,8 +190,8 @@ body::-webkit-scrollbar {
                             <h2 class="text-4xl md:text-6xl font-bold text-white mb-6">Mobile Apps Development</h2>
                             <p class="text-xl text-gray-300 mb-8 leading-relaxed">
                                 <?= ($lang_code == 'id')
-                                    ? "Ubah ide brilian Anda menjadi aplikasi Android & iOS yang powerful dan user-friendly."
-                                    : "Transform your brilliant ideas into powerful and user-friendly Android & iOS applications." ?>
+                                    ? "Ubah ide brilian Anda menjadi aplikasi Android & iOS yang powerful dan user-friendly"
+                                    : "Transform your brilliant ideas into powerful and user-friendly Android & iOS applications" ?>
                             </p>
                         </div>
                     </div>
@@ -206,8 +199,7 @@ body::-webkit-scrollbar {
                 <!-- carousel 4 -->
                 <div class="swiper-slide relative bg-black">
                     <div class="absolute inset-0">
-                        <img src="https://images.unsplash.com/photo-1611162617474-5b21e879e113?q=80&w=1920&auto=format&fit=crop"
-                            class="w-full h-full object-cover opacity-50">
+                        <img src="assets/img/slider/slider-4.png" class="w-full h-full object-cover opacity-30">
                         <div class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-black/30"></div>
                     </div>
                     <div
@@ -224,8 +216,8 @@ body::-webkit-scrollbar {
                             <h2 class="text-4xl md:text-6xl font-bold text-white mb-6">Social Media Management</h2>
                             <p class="text-xl text-gray-300 mb-8 leading-relaxed">
                                 <?= ($lang_code == 'id')
-                                    ? "Tingkatkan engagement dan brand awareness bisnis Anda dengan strategi konten kreatif."
-                                    : "Boost engagement and brand awareness for your business with creative content strategies." ?>
+                                    ? "Tingkatkan engagement dan brand awareness bisnis Anda dengan strategi konten kreatif"
+                                    : "Boost engagement and brand awareness for your business with creative content strategies" ?>
                             </p>
                         </div>
                     </div>
@@ -242,7 +234,7 @@ body::-webkit-scrollbar {
             <div class="grid grid-cols-1 lg:grid-cols-2 lg:gap-32 items-center fade-up-enter">
 
                 <div class="flex justify-center lg:justify-end order-1 lg:order-1 lg:pr-24">
-                    <div class="relative w-64 h-64 md:w-96 md:h-96">
+                    <div class="relative w-104 h-104 md:w-136 md:h-136">
                         <div class="absolute inset-0 bg-ghania-orange/20 blur-[100px] rounded-full"></div>
                         <img src="assets/img/logo-ghania-3d.PNG" alt="Ghania 3D Logo"
                             class="relative w-full h-full object-contain animate-float drop-shadow-2xl filter brightness-110">
@@ -250,7 +242,11 @@ body::-webkit-scrollbar {
                 </div>
 
                 <div class="text-white text-center lg:text-left order-2 lg:order-2 lg:pl-14">
-                    <span class="text-ghania-orange font-bold tracking-widest uppercase mb-2 block">Who We Are</span>
+                    <span class="text-ghania-orange font-bold tracking-widest uppercase mb-2 block">
+                        <?= ($lang_code == 'id')
+                            ? "Siapa kami?"
+                            : "Who are we?" ?>
+                    </span>
                     <h2 class="text-4xl md:text-5xl font-bold mb-6 leading-tight">Ghania Creative<br>Indonesia</h2>
                     <p class="text-gray-300 text-lg leading-relaxed mb-8 font-light">
                         <?= ($lang_code == 'id')
@@ -282,11 +278,10 @@ body::-webkit-scrollbar {
 
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                 <?php
-                // Logic Icon
                 $icon_web = '<svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>';
                 $icon_app = '<svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z"></path></svg>';
                 $icon_socmed = '<svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5.882V19.24a1.76 1.76 0 01-3.417.592l-2.147-6.15M18 13a3 3 0 100-6M5.436 13.683A4.001 4.001 0 017 6h1.832c4.1 0 7.625-1.234 9.168-3v14c-1.543-1.766-5.067-3-9.168-3H7a3.988 3.988 0 01-1.564-.317z"></path></svg>';
-                $icon_default = '<svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>';
+                $icon_cloud = '<svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 15a4 4 0 004 4h9a5 5 0 10-.1-9.999 5.002 5.002 0 10-9.78 2.096A4.001 4.001 0 003 15z"></path></svg>';
 
                 $result = $conn->query("SELECT * FROM services");
                 if ($result && $result->num_rows > 0):
@@ -295,10 +290,18 @@ body::-webkit-scrollbar {
                         $brief = ($lang_code == 'id') ? $row['brief_id'] : $row['brief_en'];
 
                         $check_title = strtolower($row['title_en']);
-                        if (strpos($check_title, 'website') !== false) $current_icon = $icon_web;
-                        elseif (strpos($check_title, 'mobile') !== false) $current_icon = $icon_app;
-                        elseif (strpos($check_title, 'social') !== false) $current_icon = $icon_socmed;
-                        else $current_icon = $icon_default;
+
+                        if (strpos($check_title, 'website') !== false) {
+                            $current_icon = $icon_web;
+                        } elseif (strpos($check_title, 'mobile') !== false) {
+                            $current_icon = $icon_app;
+                        } elseif (strpos($check_title, 'social') !== false) {
+                            $current_icon = $icon_socmed;
+                        } elseif (strpos($check_title, 'cloud') !== false || strpos($check_title, 'server') !== false) {
+                            $current_icon = $icon_cloud;
+                        } else {
+                            $current_icon = $icon_cloud;
+                        }
                 ?>
                 <div
                     class="bg-white/10 backdrop-blur-md border border-white/20 p-8 rounded-2xl hover:bg-white/20 transition duration-300 group hover:-translate-y-2 flex flex-col h-full">
@@ -338,7 +341,7 @@ body::-webkit-scrollbar {
                         <?php for ($i = 1; $i <= 20; $i++): ?>
                         <div class="swiper-slide flex justify-center p-4">
                             <img src="assets/img/clients/client-<?= $i ?>.png"
-                                class="h-12 w-auto object-contain filter brightness-0 invert opacity-60 hover:opacity-100 hover:scale-110 transition duration-300"
+                                class="h-12 w-auto object-contain filter brightness-0 invert opacity-60 hover:filter-none hover:opacity-100 hover:scale-110 transition duration-300"
                                 onerror="this.style.display='none'">
                         </div>
                         <?php endfor; ?>
@@ -360,11 +363,11 @@ body::-webkit-scrollbar {
         <div class="container mx-auto px-6 fade-up-enter">
             <div class="flex flex-col md:flex-row justify-between items-end mb-12">
                 <div>
-                    <h2 class="text-4xl font-bold text-white mb-2"><?= $t['title_latest_articles'] ?></h2>
+                    <h2 class="text-4xl md:text-5xl font-bold text-white mb-2"><?= $t['title_latest_articles'] ?></h2>
                     <p class="text-gray-300"><?= $t['txt_articles'] ?></p>
                 </div>
                 <a href="articles.php"
-                    class="hidden md:inline-flex items-center text-ghania-orange font-semibold hover:text-white mt-4 md:mt-0 transition">
+                    class="hidden md:inline-flex items-center text-white border-b-2 border-ghania-orange pb-1 font-semibold hover:text-ghania-orange mt-4 md:mt-0 transition">
                     <?= $t['btn_all_articles'] ?> &rarr;
                 </a>
             </div>
@@ -433,7 +436,7 @@ body::-webkit-scrollbar {
 <script>
 document.addEventListener("DOMContentLoaded", function() {
 
-    // 1. SCROLLYTELLING LOGIC
+    // SCROLLYTELLING LOGIC
     const sections = document.querySelectorAll(".snap-section");
     const backgrounds = document.querySelectorAll("[id^='bg-']");
 
@@ -468,7 +471,7 @@ document.addEventListener("DOMContentLoaded", function() {
     sections.forEach(sec => observer.observe(sec));
 
 
-    // 2. HERO SWIPER (FIX GHOSTING: fadeEffect: { crossFade: true })
+    // HERO SWIPER (FIX GHOSTING: fadeEffect: { crossFade: true })
     new Swiper(".heroSwiper", {
         spaceBetween: 0,
         effect: "fade",
@@ -487,7 +490,7 @@ document.addEventListener("DOMContentLoaded", function() {
         allowTouchMove: false,
     });
 
-    // 3. CLIENT SWIPER
+    // CLIENT SWIPER
     new Swiper(".clientSwiper", {
         slidesPerView: 2,
         spaceBetween: 30,
@@ -511,7 +514,7 @@ document.addEventListener("DOMContentLoaded", function() {
         allowTouchMove: false,
     });
 
-    // 4. ARTICLE SWIPER
+    // ARTICLE SWIPER
     new Swiper(".articleSwiper", {
         slidesPerView: 1,
         spaceBetween: 30,
