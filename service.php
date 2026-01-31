@@ -2,47 +2,57 @@
 require 'config/database.php';
 require 'config/lang.php';
 
-// Ambil Slug dari URL (service.php?slug=web-development)
+// Ambil Slug
 $slug = isset($_GET['slug']) ? $_GET['slug'] : '';
 
-// Query Database
+// Query
 $stmt = $conn->prepare("SELECT * FROM services WHERE slug = ?");
 $stmt->bind_param("s", $slug);
 $stmt->execute();
 $service = $stmt->get_result()->fetch_assoc();
 
-// Jika Layanan Tidak Ditemukan, Balik ke Home
 if (!$service) {
     header("Location: index.php");
     exit();
 }
 
-// === [NEW] LOGIC TRAFFIC & TRACKER ===
-// 1. Update Counter di Tabel Services
+// Tracker
 $conn->query("UPDATE services SET views = views + 1 WHERE id = " . $service['id']);
-
-// 2. Catat Log Pengunjung (Untuk Dashboard Admin)
 require_once 'config/tracker.php';
 record_visit($conn, 'service', $service['title_id']);
-// =====================================
 
-// Logic Bahasa (ID / EN)
+// === LOGIC BAHASA ===
 if ($lang_code == 'en') {
+    $section_title = "Our Services";
     $title = !empty($service['title_en']) ? $service['title_en'] : $service['title_id'];
     $brief = !empty($service['brief_en']) ? $service['brief_en'] : $service['brief_id'];
     $content = !empty($service['content_en']) ? $service['content_en'] : $service['content_id'];
     $cta_text = "Consult Now";
     $back_text = "Back to Home";
+    $sidebar_title = "Interested in this Service?";
+    $sidebar_desc = "Discuss your project needs with our expert team. Free consultation!";
+    $other_serv_title = "Other Services";
 } else {
+    $section_title = "Layanan Kami";
     $title = $service['title_id'];
     $brief = $service['brief_id'];
     $content = $service['content_id'];
     $cta_text = "Konsultasi Sekarang";
     $back_text = "Kembali ke Beranda";
+    $sidebar_title = "Tertarik dengan Layanan Ini?";
+    $sidebar_desc = "Diskusikan kebutuhan proyek Anda bersama tim ahli kami. Konsultasi gratis!";
+    $other_serv_title = "Layanan Lainnya";
 }
 
-// Cleaning Content (Newline to <br>)
-$content = str_replace(array('\r\n', '\r', '\n', '\\r\\n'), '<br>', $content);
+// === CLEANING DATA (AMAN) ===
+// 1. Bersihkan backslash dari database
+$clean_content = stripslashes($content);
+
+// 2. Tidak ada lagi str_replace('rn', ...) yang menghapus kata "internal"
+// TinyMCE sudah menghasilkan HTML (<p>), jadi kita tidak butuh nl2br juga.
+
+$title = stripslashes($title);
+$brief = stripslashes($brief);
 
 $page_title = $title . " - Ghania Creative";
 include 'includes/header.php';
@@ -53,10 +63,9 @@ include 'includes/navbar.php';
     <div class="absolute inset-0 opacity-20">
         <img src="assets/img/hero-bg.png" class="w-full h-full object-cover">
     </div>
-
     <div class="container mx-auto px-4 relative z-10 text-center">
         <span class="text-ghania-orange font-bold tracking-widest uppercase text-sm mb-4 block animate-fade-in-up">
-            Our Services
+            <?= $section_title ?>
         </span>
         <h1 class="text-4xl md:text-6xl font-bold text-white mb-6 leading-tight animate-fade-in-up delay-100">
             <?= $title ?>
@@ -75,12 +84,13 @@ include 'includes/navbar.php';
                 <?php if (!empty($service['thumbnail'])): ?>
                 <div
                     class="rounded-2xl overflow-hidden shadow-2xl mb-10 transform hover:scale-[1.01] transition duration-500">
-                    <img src="<?= $service['thumbnail'] ?>" alt="<?= $title ?>" class="w-full h-auto object-cover">
+                    <img src="<?= $service['thumbnail'] ?>?v=<?= time() ?>" alt="<?= $title ?>"
+                        class="w-full h-auto object-cover">
                 </div>
                 <?php endif; ?>
 
                 <div class="prose prose-lg prose-orange max-w-none text-gray-700">
-                    <?= $content ?>
+                    <?= $clean_content ?>
                 </div>
 
                 <div class="mt-12 pt-8 border-t border-gray-100">
@@ -97,7 +107,6 @@ include 'includes/navbar.php';
 
             <div class="lg:w-1/3">
                 <div class="sticky top-28 space-y-8">
-
                     <div class="bg-gray-50 p-8 rounded-2xl border border-gray-100 shadow-lg text-center">
                         <div
                             class="w-16 h-16 bg-white rounded-full flex items-center justify-center mx-auto mb-4 shadow-sm text-ghania-orange">
@@ -107,10 +116,8 @@ include 'includes/navbar.php';
                                 </path>
                             </svg>
                         </div>
-                        <h3 class="text-xl font-bold text-gray-800 mb-2">Tertarik dengan Layanan Ini?</h3>
-                        <p class="text-gray-500 text-sm mb-6">Diskusikan kebutuhan proyek Anda bersama tim ahli kami.
-                            Konsultasi gratis!</p>
-
+                        <h3 class="text-xl font-bold text-gray-800 mb-2"><?= $sidebar_title ?></h3>
+                        <p class="text-gray-500 text-sm mb-6"><?= $sidebar_desc ?></p>
                         <a href="https://wa.me/6281234567890?text=Halo%20Ghania%20Creative,%20saya%20tertarik%20dengan%20layanan%20<?= urlencode($title) ?>"
                             target="_blank"
                             class="block w-full bg-ghania-orange text-white font-bold py-3 px-6 rounded-xl hover:bg-orange-600 transition shadow-lg transform hover:-translate-y-1">
@@ -119,10 +126,9 @@ include 'includes/navbar.php';
                     </div>
 
                     <div class="bg-white p-6 rounded-2xl border border-gray-100 shadow-md">
-                        <h4 class="font-bold text-gray-800 mb-4 border-b pb-2">Layanan Lainnya</h4>
+                        <h4 class="font-bold text-gray-800 mb-4 border-b pb-2"><?= $other_serv_title ?></h4>
                         <ul class="space-y-3">
                             <?php
-                            // Ambil layanan lain selain yang sedang dibuka
                             $other_sql = "SELECT title_id, title_en, slug FROM services WHERE id != " . $service['id'] . " LIMIT 5";
                             $others = $conn->query($other_sql);
                             while ($os = $others->fetch_assoc()):
@@ -139,7 +145,6 @@ include 'includes/navbar.php';
                             <?php endwhile; ?>
                         </ul>
                     </div>
-
                 </div>
             </div>
 
@@ -150,6 +155,7 @@ include 'includes/navbar.php';
 <?php include 'includes/footer.php'; ?>
 
 <style>
+/* Styling khusus konten dari TinyMCE agar rapi */
 .prose h1,
 .prose h2,
 .prose h3 {
