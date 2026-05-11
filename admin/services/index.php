@@ -1,8 +1,10 @@
 <?php
+/**
+ * @var Database $db
+ */
 session_start();
 require '../../config/database.php';
 
-// Cek Login
 if (!isset($_SESSION['admin_logged_in'])) {
     header("Location: ../login.php");
     exit();
@@ -85,11 +87,11 @@ include '../../admin/includes/header.php';
                         </thead>
                         <tbody class="divide-y divide-gray-100">
                             <?php
-                            $result = $conn->query("SELECT * FROM services ORDER BY id DESC");
+                            $services = $db->table('services')->orderBy('id', 'DESC')->get();
                             $no = 1;
 
-                            if ($result->num_rows > 0):
-                                while ($row = $result->fetch_assoc()):
+                            if (count($services) > 0):
+                                foreach ($services as $row):
                             ?>
                             <tr class="hover:bg-orange-50 transition duration-150">
                                 <td class="p-4 text-center text-gray-500 font-medium"><?= $no++ ?></td>
@@ -144,7 +146,7 @@ include '../../admin/includes/header.php';
                                 </td>
                             </tr>
                             <?php
-                                endwhile;
+                                endforeach;
                             else:
                                 ?>
                             <tr>

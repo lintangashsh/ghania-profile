@@ -1,3 +1,9 @@
+<?php
+/**
+ * @var string $page_title
+ * @var string $meta_desc
+ */
+?>
 <!DOCTYPE html>
 <html lang="<?= $lang_code ?? 'id' ?>">
 
@@ -6,7 +12,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title><?= isset($page_title) ? $page_title . ' - Ghania Creative' : 'PT Ghania Creative Indonesia' ?></title>
-    <link rel="icon" type="image/png" href="/assets/img/ghania-3d.png">
+    <link rel="icon" type="image/png" href="<?= BASE_URL ?>assets/img/ghania-3d.png">
 
     <?php if (isset($meta_desc) && !empty($meta_desc)): ?>
     <meta name="description" content="<?= $meta_desc ?>">
@@ -27,9 +33,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
         rel="stylesheet">
 
-    <link href="/assets/css/style.css" rel="stylesheet">
-
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+    <link href="<?= BASE_URL ?>assets/css/style.css" rel="stylesheet">
+    <link rel="stylesheet" href="<?= BASE_URL ?>assets/css/swiper-bundle.min.css" />
 </head>
 
 <body class="font-sans text-ghania-dark antialiased bg-white flex flex-col min-h-screen">

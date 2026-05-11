@@ -49,14 +49,22 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
 
     if (empty($error)) {
-        $stmt = $conn->prepare("INSERT INTO services (title_id, title_en, slug, brief_id, brief_en, content_id, content_en, thumbnail) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
-        $stmt->bind_param("ssssssss", $title_id, $title_en, $slug, $brief_id, $brief_en, $content_id, $content_en, $thumbnail);
+        $insert = $db->table('services')->insert([
+            'title_id' => $title_id,
+            'title_en' => $title_en,
+            'slug' => $slug,
+            'brief_id' => $brief_id,
+            'brief_en' => $brief_en,
+            'content_id' => $content_id,
+            'content_en' => $content_en,
+            'thumbnail' => $thumbnail
+        ]);
 
-        if ($stmt->execute()) {
+        if ($insert) {
             header("Location: index.php?msg=added");
             exit();
         } else {
-            $error = "Database Error: " . $conn->error;
+            $error = "Database Error: Gagal menyimpan data layanan.";
         }
     }
 }
@@ -82,8 +90,8 @@ include '../../admin/includes/header.php';
 
         <main class="flex-1 overflow-x-hidden overflow-y-auto bg-gray-100 p-6">
             <?php if ($error): ?>
-            <div class="bg-red-100 border-l-4 border-red-500 text-red-700 p-4 mb-6 rounded shadow-sm"><?= $error ?>
-            </div>
+                <div class="bg-red-100 border-l-4 border-red-500 text-red-700 p-4 mb-6 rounded shadow-sm"><?= $error ?>
+                </div>
             <?php endif; ?>
 
             <form method="POST" enctype="multipart/form-data" id="serviceForm"
@@ -179,63 +187,63 @@ include '../../admin/includes/header.php';
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/tinymce/6.8.2/tinymce.min.js" referrerpolicy="origin"></script>
 <script>
-// TinyMCE Init - Full Width (Sama persis Artikel)
-tinymce.init({
-    selector: '.tinymce-editor',
-    height: 500, // Tinggi disamakan dengan artikel
-    menubar: false,
-    plugins: 'advlist autolink lists link charmap preview anchor searchreplace visualblocks code fullscreen insertdatetime table code help wordcount',
-    toolbar: 'undo redo | blocks | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist | removeformat | code',
-    content_style: 'body { font-family:Poppins,sans-serif; font-size:14px; color:#333; line-height:1.6; } p { margin-bottom: 1em; }',
-    forced_root_block: 'p'
-});
+    // TinyMCE Init - Full Width
+    tinymce.init({
+        selector: '.tinymce-editor',
+        height: 500,
+        menubar: false,
+        plugins: 'advlist autolink lists link charmap preview anchor searchreplace visualblocks code fullscreen insertdatetime table code help wordcount',
+        toolbar: 'undo redo | blocks | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist | removeformat | code',
+        content_style: 'body { font-family:Poppins,sans-serif; font-size:14px; color:#333; line-height:1.6; } p { margin-bottom: 1em; }',
+        forced_root_block: 'p'
+    });
 
-const dropzoneFile = document.getElementById('dropzone-file');
-const dropzoneContent = document.getElementById('dropzone-content');
-const imagePreview = document.getElementById('image-preview');
-const fileNameDisplay = document.getElementById('file-name');
-const dropzoneLabel = document.getElementById('dropzone-label');
+    const dropzoneFile = document.getElementById('dropzone-file');
+    const dropzoneContent = document.getElementById('dropzone-content');
+    const imagePreview = document.getElementById('image-preview');
+    const fileNameDisplay = document.getElementById('file-name');
+    const dropzoneLabel = document.getElementById('dropzone-label');
 
-function handleFile(file) {
-    if (file) {
-        if (file.size > 2 * 1024 * 1024) {
-            alert("File terlalu besar! Maks 2MB.");
-            dropzoneFile.value = "";
-            return;
+    function handleFile(file) {
+        if (file) {
+            if (file.size > 2 * 1024 * 1024) {
+                alert("File terlalu besar! Maks 2MB.");
+                dropzoneFile.value = "";
+                return;
+            }
+            fileNameDisplay.textContent = "File: " + file.name;
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                imagePreview.src = e.target.result;
+                imagePreview.classList.remove('hidden');
+                dropzoneContent.classList.add('hidden');
+            }
+            reader.readAsDataURL(file);
         }
-        fileNameDisplay.textContent = "File: " + file.name;
-        const reader = new FileReader();
-        reader.onload = function(e) {
-            imagePreview.src = e.target.result;
-            imagePreview.classList.remove('hidden');
-            dropzoneContent.classList.add('hidden');
-        }
-        reader.readAsDataURL(file);
     }
-}
 
-dropzoneFile.addEventListener('change', function(e) {
-    handleFile(this.files[0]);
-});
-['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
-    dropzoneLabel.addEventListener(eventName, (e) => {
-        e.preventDefault();
-        e.stopPropagation();
-    }, false);
-});
-['dragenter', 'dragover'].forEach(eventName => {
-    dropzoneLabel.addEventListener(eventName, () => dropzoneLabel.classList.add('bg-orange-50',
-        'border-ghania-orange'));
-});
-['dragleave', 'drop'].forEach(eventName => {
-    dropzoneLabel.addEventListener(eventName, () => dropzoneLabel.classList.remove('bg-orange-50',
-        'border-ghania-orange'));
-});
-dropzoneLabel.addEventListener('drop', function(e) {
-    const dt = e.dataTransfer;
-    handleFile(dt.files[0]);
-    dropzoneFile.files = dt.files;
-});
+    dropzoneFile.addEventListener('change', function(e) {
+        handleFile(this.files[0]);
+    });
+    ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+        dropzoneLabel.addEventListener(eventName, (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+        }, false);
+    });
+    ['dragenter', 'dragover'].forEach(eventName => {
+        dropzoneLabel.addEventListener(eventName, () => dropzoneLabel.classList.add('bg-orange-50',
+            'border-ghania-orange'));
+    });
+    ['dragleave', 'drop'].forEach(eventName => {
+        dropzoneLabel.addEventListener(eventName, () => dropzoneLabel.classList.remove('bg-orange-50',
+            'border-ghania-orange'));
+    });
+    dropzoneLabel.addEventListener('drop', function(e) {
+        const dt = e.dataTransfer;
+        handleFile(dt.files[0]);
+        dropzoneFile.files = dt.files;
+    });
 </script>
 </body>
 

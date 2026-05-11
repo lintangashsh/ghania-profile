@@ -19,11 +19,7 @@ if (!isset($_GET['id'])) {
 $id = $_GET['id'];
 
 // Ambil Data Lama
-$stmt = $conn->prepare("SELECT * FROM articles WHERE id = ?");
-$stmt->bind_param("i", $id);
-$stmt->execute();
-$result = $stmt->get_result();
-$article = $result->fetch_assoc();
+$article = $db->table('articles')->where('id', $id)->first();
 
 if (!$article) {
     echo "Artikel tidak ditemukan!";
@@ -32,7 +28,7 @@ if (!$article) {
 
 // Logic Update Data
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // Tangkap Input (Tanpa real_escape_string manual, biar bind_param yang kerja)
+    // Tangkap Input
     $title_id = $_POST['title_id'];
     $content_id = $_POST['content_id'];
     $title_en = $_POST['title_en'];
@@ -45,7 +41,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $meta_keys = $_POST['meta_keywords'];
 
     // Logic Gambar
-    $thumbnail = $article['thumbnail']; // Default: pakai gambar lama
+    $thumbnail = $article['thumbnail'];
 
     // Jika user upload gambar baru
     if (isset($_FILES['thumbnail']) && $_FILES['thumbnail']['error'] === 0) {
@@ -73,17 +69,23 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     if (empty($error)) {
         // Query Update
-        $update_sql = "UPDATE articles SET title_id=?, title_en=?, slug=?, content_id=?, content_en=?, thumbnail=?, meta_description=?, meta_keywords=? WHERE id=?";
-        $stmt_up = $conn->prepare($update_sql);
-        // ssssssssi (8 string, 1 int)
-        $stmt_up->bind_param("ssssssssi", $title_id, $title_en, $slug, $content_id, $content_en, $thumbnail, $meta_desc, $meta_keys, $id);
+        $update = $db->table('articles')->where('id', $id)->update([
+            'title_id' => $title_id,
+            'title_en' => $title_en,
+            'slug' => $slug,
+            'content_id' => $content_id,
+            'content_en' => $content_en,
+            'thumbnail' => $thumbnail,
+            'meta_description' => $meta_desc,
+            'meta_keywords' => $meta_keys
+        ]);
 
-        if ($stmt_up->execute()) {
+        if ($update) {
             // Refresh data setelah update biar form terisi data baru
-            header("Location: index.php?msg=updated"); // Redirect ke index biar aman
+            header("Location: index.php?msg=updated");
             exit();
         } else {
-            $error = "Gagal update database: " . $conn->error;
+            $error = "Gagal update database.";
         }
     }
 }
@@ -96,8 +98,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Edit Artikel - Admin Ghania</title>
-    <link rel="icon" type="image/png" href="/assets/img/ghania-3d.png">
-    <link href="../../assets/css/style.css" rel="stylesheet">
+    <link rel="icon" type="image/png" href="<?= BASE_URL ?>assets/img/ghania-3d.png">
+    <link href="<?= BASE_URL ?>assets/css/style.css" rel="stylesheet">
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/tinymce/6.8.2/tinymce.min.js" referrerpolicy="origin"></script>
     <script>

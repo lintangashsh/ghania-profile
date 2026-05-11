@@ -1,4 +1,7 @@
 <?php
+/**
+ * @var Database $db
+ */
 session_start();
 // 1. Cek Login
 if (!isset($_SESSION['admin_logged_in'])) {
@@ -13,10 +16,7 @@ if (isset($_GET['action']) && $_GET['action'] == 'delete' && isset($_GET['id']))
     $id = $_GET['id'];
 
     // Hapus gambar fisik
-    $stmt = $conn->prepare("SELECT thumbnail FROM articles WHERE id = ?");
-    $stmt->bind_param("i", $id);
-    $stmt->execute();
-    $data = $stmt->get_result()->fetch_assoc();
+    $data = $db->table('articles')->select('thumbnail')->where('id', $id)->first();
 
     if ($data && !filter_var($data['thumbnail'], FILTER_VALIDATE_URL)) {
         $file_path = "../../" . $data['thumbnail'];
@@ -24,9 +24,7 @@ if (isset($_GET['action']) && $_GET['action'] == 'delete' && isset($_GET['id']))
     }
 
     // Hapus dari DB
-    $stmt = $conn->prepare("DELETE FROM articles WHERE id = ?");
-    $stmt->bind_param("i", $id);
-    $stmt->execute();
+    $db->execute("DELETE FROM articles WHERE id = ?", [$id]);
     $success_msg = "Artikel berhasil dihapus!";
 }
 ?>
@@ -38,8 +36,8 @@ if (isset($_GET['action']) && $_GET['action'] == 'delete' && isset($_GET['id']))
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Kelola Artikel - Admin Ghania</title>
-    <link rel="icon" type="image/png" href="/assets/img/ghania-3d.png">
-    <link href="../../assets/css/style.css" rel="stylesheet">
+    <link rel="icon" type="image/png" href="<?= BASE_URL ?>assets/img/ghania-3d.png">
+    <link href="<?= BASE_URL ?>assets/css/style.css" rel="stylesheet">
 </head>
 
 <body class="bg-gray-100 font-sans antialiased">
@@ -83,12 +81,11 @@ if (isset($_GET['action']) && $_GET['action'] == 'delete' && isset($_GET['id']))
                             </thead>
                             <tbody class="text-gray-600 text-sm font-light">
                                 <?php
-                                $sql = "SELECT * FROM articles ORDER BY created_at DESC";
-                                $result = $conn->query($sql);
+                                $articles = $db->table('articles')->orderBy('created_at', 'DESC')->get();
                                 $no = 1;
 
-                                if ($result->num_rows > 0):
-                                    while ($row = $result->fetch_assoc()):
+                                if (count($articles) > 0):
+                                    foreach ($articles as $row):
                                         $t_id = $row['title_id'] ? $row['title_id'] : '(No Title ID)';
                                         $t_en = $row['title_en'] ? $row['title_en'] : '-';
 
@@ -141,7 +138,7 @@ if (isset($_GET['action']) && $_GET['action'] == 'delete' && isset($_GET['id']))
                                         </div>
                                     </td>
                                 </tr>
-                                <?php endwhile;
+                                <?php endforeach;
                                 else: ?>
                                 <tr>
                                     <td colspan="5" class="py-6 text-center text-gray-500">Belum ada artikel.</td>

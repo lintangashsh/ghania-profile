@@ -1,13 +1,19 @@
 <?php
 require 'config/database.php';
 require 'config/lang.php';
+
+/**
+ * @var Database $db
+ * @var array $t
+ * @var string $lang_code
+ */
+
 $page_title = ($lang_code == 'id') ? 'Beranda' : 'Home';
 include 'includes/header.php';
 include 'includes/navbar.php';
 require 'config/tracker.php';
-record_visit($conn, 'home', 'Halaman Utama');
+record_visit($db, 'home', 'Halaman Utama');
 
-// DATA BACKGROUND UNTUK SCROLLYTELLING
 $bg_sections = [
     'about'     => '',
     'services'  => 'https://images.unsplash.com/photo-1550751827-4bd374c3f58b?q=80&w=1920&auto=format&fit=crop',
@@ -17,98 +23,93 @@ $bg_sections = [
 ?>
 
 <style>
-/* HIDE SCROLLBAR */
-html,
-body {
-    scrollbar-width: none !important;
-    -ms-overflow-style: none !important;
-    overflow-y: scroll;
-    scroll-behavior: smooth;
-    background-color: black;
-}
-
-body::-webkit-scrollbar {
-    display: none !important;
-}
-
-/* NAVBAR OVERRIDE (Transparan ke 50% Dark saat scroll) */
-.nav-link,
-.lang-link {
-    color: #ffffff !important;
-}
-
-.nav-link:hover,
-.lang-link:hover {
-    color: #FF6600 !important;
-}
-
-#nav-logo {
-    filter: brightness(0) invert(1) !important;
-}
-
-#navbar.bg-white\/95 {
-    background-color: rgba(0, 0, 0, 0.5) !important;
-    backdrop-filter: blur(10px) !important;
-    box-shadow: none !important;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1) !important;
-}
-
-#navbar {
-    transition: background-color 0.5s ease, padding 0.3s ease;
-}
-
-/* ANIMASI TEKS */
-.fade-up-enter {
-    opacity: 0;
-    transform: translateY(40px);
-    transition: all 1s ease-out;
-}
-
-.fade-up-active {
-    opacity: 1;
-    transform: translateY(0);
-}
-
-/* SWIPER CUSTOM */
-.swiper-pagination-bullet {
-    background: white !important;
-    opacity: 0.5;
-}
-
-.swiper-pagination-bullet-active {
-    background: #FF6600 !important;
-    opacity: 1;
-}
-
-/* FLOATING ANIMATION (Untuk Logo 3D) */
-@keyframes float {
-    0% {
-        transform: translateY(0px);
+    html,
+    body {
+        scrollbar-width: none !important;
+        -ms-overflow-style: none !important;
+        overflow-y: scroll;
+        scroll-behavior: smooth;
+        background-color: black;
     }
 
-    50% {
-        transform: translateY(-20px);
+    body::-webkit-scrollbar {
+        display: none !important;
     }
 
-    100% {
-        transform: translateY(0px);
+    .nav-link,
+    .lang-link {
+        color: #ffffff !important;
     }
-}
 
-.animate-float {
-    animation: float 6s ease-in-out infinite;
-}
+    .nav-link:hover,
+    .lang-link:hover {
+        color: #FF6600 !important;
+    }
+
+    #nav-logo {
+        filter: brightness(0) invert(1) !important;
+    }
+
+    #navbar.bg-white\/95 {
+        background-color: rgba(0, 0, 0, 0.5) !important;
+        backdrop-filter: blur(10px) !important;
+        box-shadow: none !important;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1) !important;
+    }
+
+    #navbar {
+        transition: background-color 0.5s ease, padding 0.3s ease;
+    }
+
+    .fade-up-enter {
+        opacity: 0;
+        transform: translateY(40px);
+        transition: all 1s ease-out;
+    }
+
+    .fade-up-active {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    .swiper-pagination-bullet {
+        background: white !important;
+        opacity: 0.5;
+    }
+
+    .swiper-pagination-bullet-active {
+        background: #FF6600 !important;
+        opacity: 1;
+    }
+
+    @keyframes float {
+        0% {
+            transform: translateY(0px);
+        }
+
+        50% {
+            transform: translateY(-20px);
+        }
+
+        100% {
+            transform: translateY(0px);
+        }
+    }
+
+    .animate-float {
+        animation: float 6s ease-in-out infinite;
+    }
 </style>
 
 <div class="fixed inset-0 w-full h-full z-0 bg-black">
     <?php foreach ($bg_sections as $id => $img): ?>
-    <?php if ($img): ?>
-    <div id="bg-<?= $id ?>"
-        class="absolute inset-0 w-full h-full transition-opacity duration-1000 ease-in-out opacity-0">
-        <img src="<?= $img ?>" class="w-full h-full object-cover">
-        <div class="absolute inset-0 bg-gradient-to-r from-black/90 via-black/70 to-black/40"></div>
-    </div>
-    <?php endif; ?>
+        <?php if ($img): ?>
+            <div id="bg-<?= $id ?>"
+                class="absolute inset-0 w-full h-full transition-opacity duration-1000 ease-in-out opacity-0">
+                <img src="<?= $img ?>" class="w-full h-full object-cover">
+                <div class="absolute inset-0 bg-gradient-to-r from-black/90 via-black/70 to-black/40"></div>
+            </div>
+        <?php endif; ?>
     <?php endforeach; ?>
 </div>
 
@@ -283,9 +284,9 @@ body::-webkit-scrollbar {
                 $icon_socmed = '<svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5.882V19.24a1.76 1.76 0 01-3.417.592l-2.147-6.15M18 13a3 3 0 100-6M5.436 13.683A4.001 4.001 0 017 6h1.832c4.1 0 7.625-1.234 9.168-3v14c-1.543-1.766-5.067-3-9.168-3H7a3.988 3.988 0 01-1.564-.317z"></path></svg>';
                 $icon_cloud = '<svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 15a4 4 0 004 4h9a5 5 0 10-.1-9.999 5.002 5.002 0 10-9.78 2.096A4.001 4.001 0 003 15z"></path></svg>';
 
-                $result = $conn->query("SELECT * FROM services");
-                if ($result && $result->num_rows > 0):
-                    while ($row = $result->fetch_assoc()):
+                $services = $db->table('services')->get();
+                if (count($services) > 0):
+                    foreach ($services as $row):
                         $title = ($lang_code == 'id') ? $row['title_id'] : $row['title_en'];
                         $brief = ($lang_code == 'id') ? $row['brief_id'] : $row['brief_en'];
 
@@ -303,26 +304,26 @@ body::-webkit-scrollbar {
                             $current_icon = $icon_cloud;
                         }
                 ?>
-                <div
-                    class="bg-white/10 backdrop-blur-md border border-white/20 p-8 rounded-2xl hover:bg-white/20 transition duration-300 group hover:-translate-y-2 flex flex-col h-full">
-                    <div
-                        class="w-16 h-16 bg-ghania-orange/20 rounded-full flex items-center justify-center mb-6 text-ghania-orange group-hover:bg-ghania-orange group-hover:text-white transition-all">
-                        <?= $current_icon ?>
-                    </div>
-                    <h3 class="text-xl font-bold mb-3 text-white"><?= $title ?></h3>
-                    <p class="text-gray-300 text-sm mb-6 flex-grow leading-relaxed">
-                        <?= substr($brief, 0, 100) . '...' ?>
-                    </p>
-                    <a href="service.php?slug=<?= $row['slug'] ?>"
-                        class="inline-flex items-center text-ghania-orange font-semibold hover:text-white transition">
-                        <?= $t['btn_read_more'] ?> <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor"
-                            viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7">
-                            </path>
-                        </svg>
-                    </a>
-                </div>
-                <?php endwhile;
+                        <div
+                            class="bg-white/10 backdrop-blur-md border border-white/20 p-8 rounded-2xl hover:bg-white/20 transition duration-300 group hover:-translate-y-2 flex flex-col h-full">
+                            <div
+                                class="w-16 h-16 bg-ghania-orange/20 rounded-full flex items-center justify-center mb-6 text-ghania-orange group-hover:bg-ghania-orange group-hover:text-white transition-all">
+                                <?= $current_icon ?>
+                            </div>
+                            <h3 class="text-xl font-bold mb-3 text-white"><?= $title ?></h3>
+                            <p class="text-gray-300 text-sm mb-6 flex-grow leading-relaxed">
+                                <?= substr($brief, 0, 100) . '...' ?>
+                            </p>
+                            <a href="service.php?slug=<?= $row['slug'] ?>"
+                                class="inline-flex items-center text-ghania-orange font-semibold hover:text-white transition">
+                                <?= $t['btn_read_more'] ?> <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor"
+                                    viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7">
+                                    </path>
+                                </svg>
+                            </a>
+                        </div>
+                <?php endforeach;
                 endif; ?>
             </div>
         </div>
@@ -339,11 +340,11 @@ body::-webkit-scrollbar {
                 <div class="swiper clientSwiper">
                     <div class="swiper-wrapper items-center">
                         <?php for ($i = 1; $i <= 20; $i++): ?>
-                        <div class="swiper-slide flex justify-center p-4">
-                            <img src="assets/img/clients/client-<?= $i ?>.png"
-                                class="h-12 w-auto object-contain filter brightness-0 invert opacity-60 hover:filter-none hover:opacity-100 hover:scale-110 transition duration-300"
-                                onerror="this.style.display='none'">
-                        </div>
+                            <div class="swiper-slide flex justify-center p-4">
+                                <img src="assets/img/clients/client-<?= $i ?>.png"
+                                    class="h-12 w-auto object-contain filter brightness-0 invert opacity-60 hover:filter-none hover:opacity-100 hover:scale-110 transition duration-300"
+                                    onerror="this.style.display='none'">
+                            </div>
                         <?php endfor; ?>
                     </div>
                 </div>
@@ -375,9 +376,9 @@ body::-webkit-scrollbar {
             <div class="swiper articleSwiper pb-12">
                 <div class="swiper-wrapper">
                     <?php
-                    $res_art = $conn->query("SELECT * FROM articles ORDER BY created_at DESC LIMIT 5");
-                    if ($res_art && $res_art->num_rows > 0):
-                        while ($row = $res_art->fetch_assoc()):
+                    $articles = $db->table('articles')->orderBy('created_at', 'DESC')->limit(5)->get();
+                    if (count($articles) > 0):
+                        foreach ($articles as $row):
                             if ($lang_code == 'en' && !empty($row['title_en'])) {
                                 $d_title = $row['title_en'];
                                 $d_content = $row['content_en'];
@@ -387,30 +388,30 @@ body::-webkit-scrollbar {
                             }
                             $thumb = !empty($row['thumbnail']) ? $row['thumbnail'] : 'https://via.placeholder.com/800x450';
                     ?>
-                    <div class="swiper-slide h-auto">
-                        <div
-                            class="bg-white/10 backdrop-blur-md border border-white/20 rounded-xl overflow-hidden hover:bg-white/20 transition duration-300 h-full flex flex-col group">
-                            <div class="relative h-48 overflow-hidden">
-                                <img src="<?= $thumb ?>"
-                                    class="w-full h-full object-cover transform group-hover:scale-110 transition duration-500">
+                            <div class="swiper-slide h-auto">
                                 <div
-                                    class="absolute top-4 left-4 bg-ghania-orange text-white text-xs font-bold px-3 py-1 rounded-full uppercase">
-                                    Blog</div>
+                                    class="bg-white/10 backdrop-blur-md border border-white/20 rounded-xl overflow-hidden hover:bg-white/20 transition duration-300 h-full flex flex-col group">
+                                    <div class="relative h-48 overflow-hidden">
+                                        <img src="<?= $thumb ?>"
+                                            class="w-full h-full object-cover transform group-hover:scale-110 transition duration-500">
+                                        <div
+                                            class="absolute top-4 left-4 bg-ghania-orange text-white text-xs font-bold px-3 py-1 rounded-full uppercase">
+                                            Blog</div>
+                                    </div>
+                                    <div class="p-6 flex flex-col flex-grow">
+                                        <div class="text-xs text-gray-400 mb-2">
+                                            <?= date('d M Y', strtotime($row['created_at'])) ?></div>
+                                        <h3
+                                            class="text-lg font-bold text-white mb-3 line-clamp-2 group-hover:text-ghania-orange transition">
+                                            <a href="article-detail.php?slug=<?= $row['slug'] ?>"><?= $d_title ?></a>
+                                        </h3>
+                                        <p class="text-gray-400 text-sm line-clamp-3 mb-4 flex-grow">
+                                            <?= substr(strip_tags($d_content), 0, 100) . '...' ?>
+                                        </p>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="p-6 flex flex-col flex-grow">
-                                <div class="text-xs text-gray-400 mb-2">
-                                    <?= date('d M Y', strtotime($row['created_at'])) ?></div>
-                                <h3
-                                    class="text-lg font-bold text-white mb-3 line-clamp-2 group-hover:text-ghania-orange transition">
-                                    <a href="article-detail.php?slug=<?= $row['slug'] ?>"><?= $d_title ?></a>
-                                </h3>
-                                <p class="text-gray-400 text-sm line-clamp-3 mb-4 flex-grow">
-                                    <?= substr(strip_tags($d_content), 0, 100) . '...' ?>
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                    <?php endwhile;
+                    <?php endforeach;
                     endif; ?>
                 </div>
                 <div class="swiper-pagination"></div>
@@ -431,105 +432,97 @@ body::-webkit-scrollbar {
 
 </div>
 
-<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+<script src="<?= BASE_URL ?>assets/js/swiper-bundle.min.js"></script>
 
 <script>
-document.addEventListener("DOMContentLoaded", function() {
+    document.addEventListener("DOMContentLoaded", function() {
 
-    // SCROLLYTELLING LOGIC
-    const sections = document.querySelectorAll(".snap-section");
-    const backgrounds = document.querySelectorAll("[id^='bg-']");
+        const sections = document.querySelectorAll(".snap-section");
+        const backgrounds = document.querySelectorAll("[id^='bg-']");
 
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach((entry) => {
-            if (entry.isIntersecting) {
-                const targetBgId = entry.target.getAttribute("data-target");
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach((entry) => {
+                if (entry.isIntersecting) {
+                    const targetBgId = entry.target.getAttribute("data-target");
 
-                // Matikan semua background
-                backgrounds.forEach(bg => {
-                    bg.classList.remove("opacity-100");
-                    bg.classList.add("opacity-0");
-                });
+                    backgrounds.forEach(bg => {
+                        bg.classList.remove("opacity-100");
+                        bg.classList.add("opacity-0");
+                    });
 
-                // Nyalakan background target (kecuali Hero/None)
-                if (targetBgId !== "none" && targetBgId) {
-                    const activeBg = document.getElementById(targetBgId);
-                    if (activeBg) {
-                        activeBg.classList.remove("opacity-0");
-                        activeBg.classList.add("opacity-100");
+                    if (targetBgId !== "none" && targetBgId) {
+                        const activeBg = document.getElementById(targetBgId);
+                        if (activeBg) {
+                            activeBg.classList.remove("opacity-0");
+                            activeBg.classList.add("opacity-100");
+                        }
                     }
+
+                    const textContent = entry.target.querySelector(".fade-up-enter");
+                    if (textContent) textContent.classList.add("fade-up-active");
                 }
-
-                // Animasi Teks
-                const textContent = entry.target.querySelector(".fade-up-enter");
-                if (textContent) textContent.classList.add("fade-up-active");
-            }
+            });
+        }, {
+            threshold: 0.4
         });
-    }, {
-        threshold: 0.4
-    });
-    sections.forEach(sec => observer.observe(sec));
+        sections.forEach(sec => observer.observe(sec));
 
+        new Swiper(".heroSwiper", {
+            spaceBetween: 0,
+            effect: "fade",
+            fadeEffect: {
+                crossFade: true
+            },
+            loop: true,
+            autoplay: {
+                delay: 5000,
+                disableOnInteraction: false
+            },
+            pagination: {
+                el: ".swiper-pagination",
+                clickable: true
+            },
+            allowTouchMove: false,
+        });
 
-    // HERO SWIPER (FIX GHOSTING: fadeEffect: { crossFade: true })
-    new Swiper(".heroSwiper", {
-        spaceBetween: 0,
-        effect: "fade",
-        fadeEffect: {
-            crossFade: true
-        }, // ANTI GHOSTING
-        loop: true,
-        autoplay: {
-            delay: 5000,
-            disableOnInteraction: false
-        },
-        pagination: {
-            el: ".swiper-pagination",
-            clickable: true
-        },
-        allowTouchMove: false,
-    });
+        new Swiper(".clientSwiper", {
+            slidesPerView: 2,
+            spaceBetween: 30,
+            loop: true,
+            speed: 3000,
+            autoplay: {
+                delay: 0,
+                disableOnInteraction: false
+            },
+            breakpoints: {
+                640: {
+                    slidesPerView: 3
+                },
+                768: {
+                    slidesPerView: 4
+                },
+                1024: {
+                    slidesPerView: 5
+                },
+            },
+            allowTouchMove: false,
+        });
 
-    // CLIENT SWIPER
-    new Swiper(".clientSwiper", {
-        slidesPerView: 2,
-        spaceBetween: 30,
-        loop: true,
-        speed: 3000,
-        autoplay: {
-            delay: 0,
-            disableOnInteraction: false
-        },
-        breakpoints: {
-            640: {
-                slidesPerView: 3
+        new Swiper(".articleSwiper", {
+            slidesPerView: 1,
+            spaceBetween: 30,
+            pagination: {
+                el: ".swiper-pagination",
+                clickable: true
             },
-            768: {
-                slidesPerView: 4
+            breakpoints: {
+                640: {
+                    slidesPerView: 2
+                },
+                1024: {
+                    slidesPerView: 3
+                },
             },
-            1024: {
-                slidesPerView: 5
-            },
-        },
-        allowTouchMove: false,
+        });
     });
-
-    // ARTICLE SWIPER
-    new Swiper(".articleSwiper", {
-        slidesPerView: 1,
-        spaceBetween: 30,
-        pagination: {
-            el: ".swiper-pagination",
-            clickable: true
-        },
-        breakpoints: {
-            640: {
-                slidesPerView: 2
-            },
-            1024: {
-                slidesPerView: 3
-            },
-        },
-    });
-});
 </script>

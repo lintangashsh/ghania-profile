@@ -73,8 +73,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tambah Artikel - Admin Ghania</title>
-    <link rel="icon" type="image/png" href="/assets/img/ghania-3d.png">
-    <link href="../../assets/css/style.css" rel="stylesheet">
+    <link rel="icon" type="image/png" href="<?= BASE_URL ?>assets/img/ghania-3d.png">
+    <link href="<?= BASE_URL ?>assets/css/style.css" rel="stylesheet">
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/tinymce/6.8.2/tinymce.min.js" referrerpolicy="origin"></script>
     <script>

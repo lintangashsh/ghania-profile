@@ -17,10 +17,7 @@ if (!isset($_GET['id'])) {
 $id = $_GET['id'];
 
 // Ambil Data
-$stmt = $conn->prepare("SELECT * FROM services WHERE id = ?");
-$stmt->bind_param("i", $id);
-$stmt->execute();
-$data = $stmt->get_result()->fetch_assoc();
+$data = $db->table('services')->where('id', $id)->first();
 
 if (!$data) {
     header("Location: index.php");
@@ -74,14 +71,22 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
 
     if (empty($error)) {
-        $stmt_up = $conn->prepare("UPDATE services SET title_id=?, title_en=?, slug=?, brief_id=?, brief_en=?, content_id=?, content_en=?, thumbnail=? WHERE id=?");
-        $stmt_up->bind_param("ssssssssi", $title_id, $title_en, $slug, $brief_id, $brief_en, $content_id, $content_en, $thumbnail, $id);
+        $update = $db->table('services')->where('id', $id)->update([
+            'title_id' => $title_id,
+            'title_en' => $title_en,
+            'slug' => $slug,
+            'brief_id' => $brief_id,
+            'brief_en' => $brief_en,
+            'content_id' => $content_id,
+            'content_en' => $content_en,
+            'thumbnail' => $thumbnail
+        ]);
 
-        if ($stmt_up->execute()) {
+        if ($update) {
             header("Location: edit.php?id=$id&msg=updated&t=" . time());
             exit();
         } else {
-            $error = "Gagal update: " . $conn->error;
+            $error = "Gagal update data layanan.";
         }
     }
 }

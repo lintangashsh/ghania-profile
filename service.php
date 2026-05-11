@@ -2,26 +2,19 @@
 require 'config/database.php';
 require 'config/lang.php';
 
-// Ambil Slug
 $slug = isset($_GET['slug']) ? $_GET['slug'] : '';
 
-// Query
-$stmt = $conn->prepare("SELECT * FROM services WHERE slug = ?");
-$stmt->bind_param("s", $slug);
-$stmt->execute();
-$service = $stmt->get_result()->fetch_assoc();
+$service = $db->table('services')->where('slug', $slug)->first();
 
 if (!$service) {
     header("Location: index.php");
     exit();
 }
 
-// Tracker
-$conn->query("UPDATE services SET views = views + 1 WHERE id = " . $service['id']);
+$db->execute("UPDATE services SET views = views + 1 WHERE id = ?", [$service['id']]);
 require_once 'config/tracker.php';
-record_visit($conn, 'service', $service['title_id']);
+record_visit($db, 'service', $service['title_id']);
 
-// === LOGIC BAHASA ===
 if ($lang_code == 'en') {
     $section_title = "Our Services";
     $title = !empty($service['title_en']) ? $service['title_en'] : $service['title_id'];
@@ -44,13 +37,7 @@ if ($lang_code == 'en') {
     $other_serv_title = "Layanan Lainnya";
 }
 
-// === CLEANING DATA (AMAN) ===
-// 1. Bersihkan backslash dari database
 $clean_content = stripslashes($content);
-
-// 2. Tidak ada lagi str_replace('rn', ...) yang menghapus kata "internal"
-// TinyMCE sudah menghasilkan HTML (<p>), jadi kita tidak butuh nl2br juga.
-
 $title = stripslashes($title);
 $brief = stripslashes($brief);
 
@@ -129,9 +116,8 @@ include 'includes/navbar.php';
                         <h4 class="font-bold text-gray-800 mb-4 border-b pb-2"><?= $other_serv_title ?></h4>
                         <ul class="space-y-3">
                             <?php
-                            $other_sql = "SELECT title_id, title_en, slug FROM services WHERE id != " . $service['id'] . " LIMIT 5";
-                            $others = $conn->query($other_sql);
-                            while ($os = $others->fetch_assoc()):
+                            $others = $db->table('services')->select('title_id, title_en, slug')->where('id', '!=', $service['id'])->limit(5)->get();
+                            foreach ($others as $os):
                                 $os_title = ($lang_code == 'en') ? $os['title_en'] : $os['title_id'];
                             ?>
                             <li>
@@ -142,7 +128,7 @@ include 'includes/navbar.php';
                                     <span class="text-sm font-medium"><?= $os_title ?></span>
                                 </a>
                             </li>
-                            <?php endwhile; ?>
+                            <?php endforeach; ?>
                         </ul>
                     </div>
                 </div>
@@ -155,7 +141,6 @@ include 'includes/navbar.php';
 <?php include 'includes/footer.php'; ?>
 
 <style>
-/* Styling khusus konten dari TinyMCE agar rapi */
 .prose h1,
 .prose h2,
 .prose h3 {

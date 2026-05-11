@@ -2,11 +2,9 @@
 require 'config/database.php';
 require 'config/lang.php';
 
-// LOGIC TRACKER
 require_once 'config/tracker.php';
-record_visit($conn, 'articles_index', 'Daftar Artikel');
+record_visit($db, 'articles_index', 'Daftar Artikel');
 
-// LOGIC BAHASA
 if ($lang_code == 'en') {
     $page_title_text = "Latest Articles";
     $page_subtitle = "Insights, news, and technological innovations from Ghania Creative";
@@ -23,31 +21,24 @@ if ($lang_code == 'en') {
     $txt_page = "Halaman";
 }
 
-// LOGIC PAGINATION & SEARCH
-$search = isset($_GET['q']) ? $conn->real_escape_string($_GET['q']) : '';
+$search = isset($_GET['q']) ? $_GET['q'] : '';
 $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
 $limit = 9;
 $offset = ($page - 1) * $limit;
 
-// Query Dasar
-$where_clause = "";
+$query = $db->table('articles a')
+    ->select('a.*, u.name as author_name')
+    ->join('users u', 'a.author_id', '=', 'u.id');
+
 if (!empty($search)) {
-    $where_clause = "WHERE title_id LIKE '%$search%' OR title_en LIKE '%$search%' OR content_id LIKE '%$search%'";
+    $searchParam = "%{$search}%";
+    $query->whereRaw("(a.title_id LIKE ? OR a.title_en LIKE ? OR a.content_id LIKE ?)", [$searchParam, $searchParam, $searchParam]);
 }
 
-// Hitung Total Data (Untuk Pagination)
-$total_result = $conn->query("SELECT COUNT(*) as count FROM articles $where_clause");
-$total_rows = $total_result->fetch_assoc()['count'];
+$total_rows = $query->count();
 $total_pages = ceil($total_rows / $limit);
 
-// Ambil Data Artikel
-$sql = "SELECT a.*, u.name as author_name 
-        FROM articles a 
-        LEFT JOIN users u ON a.author_id = u.id 
-        $where_clause 
-        ORDER BY a.created_at DESC 
-        LIMIT $limit OFFSET $offset";
-$articles = $conn->query($sql);
+$articles = $query->orderBy('a.created_at', 'DESC')->limit($limit)->offset($offset)->get();
 
 $page_title = $page_title_text . " - Ghania Creative";
 include 'includes/header.php';
@@ -97,9 +88,9 @@ include 'includes/navbar.php';
             </form>
         </div>
 
-        <?php if ($articles && $articles->num_rows > 0): ?>
+        <?php if (count($articles) > 0): ?>
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            <?php while ($row = $articles->fetch_assoc()):
+            <?php foreach ($articles as $row):
                     if ($lang_code == 'en') {
                         $art_title = !empty($row['title_en']) ? $row['title_en'] : $row['title_id'];
                         $art_desc = !empty($row['content_en']) ? $row['content_en'] : $row['content_id'];
@@ -164,7 +155,7 @@ include 'includes/navbar.php';
                     </a>
                 </div>
             </article>
-            <?php endwhile; ?>
+            <?php endforeach; ?>
         </div>
 
         <?php if ($total_pages > 1): ?>

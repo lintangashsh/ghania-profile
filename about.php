@@ -5,7 +5,6 @@ $page_title = ($lang_code == 'en') ? "About Us - Ghania Creative" : "Tentang Kam
 include 'includes/header.php';
 include 'includes/navbar.php';
 
-// data keseluruhan tentang kami/about us
 $sections = [
     [
         'id' => 'identity',
@@ -73,7 +72,6 @@ body::-webkit-scrollbar {
     display: none !important;
 }
 
-/* LOGIC NAVBAR KHUSUS */
 .nav-link,
 .lang-link {
     color: #ffffff !important;
@@ -84,12 +82,10 @@ body::-webkit-scrollbar {
     color: #FF6600 !important;
 }
 
-/* Logo selalu putih */
 #nav-logo {
     filter: brightness(0) invert(1) !important;
 }
 
-/* Override Background Saat Scroll */
 #navbar.bg-white\/95 {
     background-color: rgba(0, 0, 0, 0.5) !important;
     backdrop-filter: blur(8px) !important;
@@ -97,12 +93,10 @@ body::-webkit-scrollbar {
     border-bottom: 1px solid rgba(255, 255, 255, 0.1) !important;
 }
 
-/* Padding Navbar */
 #navbar {
     transition: background-color 0.5s ease, padding 0.3s ease;
 }
 
-/* Animasi Teks */
 .fade-up-enter {
     opacity: 0;
     transform: translateY(40px);

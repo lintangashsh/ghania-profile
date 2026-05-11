@@ -1,3 +1,9 @@
+<?php
+/**
+ * @var array $t
+ * @var string $lang_code
+ */
+?>
 <footer class="bg-ghania-dark text-white pt-16 pb-8 mt-auto border-t border-gray-800">
     <div class="container mx-auto px-4">
         <div class="grid grid-cols-1 md:grid-cols-3 gap-12 mb-12">
@@ -92,14 +98,14 @@
 </footer>
 
 <script>
-const btnMobile = document.getElementById('mobile-menu-btn');
-const menuMobile = document.getElementById('mobile-menu');
+    const btnMobile = document.getElementById('mobile-menu-btn');
+    const menuMobile = document.getElementById('mobile-menu');
 
-if (btnMobile && menuMobile) {
-    btnMobile.addEventListener('click', () => {
-        menuMobile.classList.toggle('hidden');
-    });
-}
+    if (btnMobile && menuMobile) {
+        btnMobile.addEventListener('click', () => {
+            menuMobile.classList.toggle('hidden');
+        });
+    }
 </script>
 
 </body>

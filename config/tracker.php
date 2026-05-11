@@ -1,19 +1,18 @@
 <?php
+
+declare(strict_types=1);
+
 // Mencegah error jika tracker dipanggil double
 if (!function_exists('record_visit')) {
-    function record_visit($conn, $page_type, $page_title = '')
+    function record_visit(Database $db, string $page_type, string $page_title = ''): void
     {
-        $ip = $_SERVER['REMOTE_ADDR'];
+        $ip = $_SERVER['REMOTE_ADDR'] ?? '0.0.0.0';
 
         // Simpan ke Log
-        $stmt = $conn->prepare("INSERT INTO visitor_logs (page_type, page_title, ip_address) VALUES (?, ?, ?)");
-        $stmt->bind_param("sss", $page_type, $page_title, $ip);
-        $stmt->execute();
-
-        // Jika halaman artikel/service, update counter di tabel utamanya juga
-        if ($page_type == 'article') {
-            // Kita asumsikan $page_title menyimpan slug atau ID untuk identifikasi update
-            // (Disederhanakan: Tracker di artikel detail nanti update manual)
-        }
+        $db->table('visitor_logs')->insert([
+            'page_type'  => $page_type,
+            'page_title' => $page_title,
+            'ip_address' => $ip,
+        ]);
     }
 }

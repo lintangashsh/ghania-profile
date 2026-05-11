@@ -1,5 +1,9 @@
 @import "tailwindcss";
 
+@source "../*.php";
+@source "../includes/*.php";
+@source "../admin/**/*.php";
+
 @theme {
     --color-ghania-orange: #F05A28;
     --color-ghania-dark: #2D2D2D;

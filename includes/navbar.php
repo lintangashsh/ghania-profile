@@ -1,16 +1,20 @@
 <?php
+/**
+ * @var Database $db
+ * @var array $t
+ * @var string $lang_code
+ * @var string $current_page
+ */
+
 $params = $_GET;
 
-// Logic Bahasa
 $params['lang'] = 'id';
 $link_id = '?' . http_build_query($params);
 $params['lang'] = 'en';
 $link_en = '?' . http_build_query($params);
 
-// Deteksi Halaman Aktif
 $current_page = basename($_SERVER['PHP_SELF']);
 
-// Fungsi Helper Helper Styling
 function getNavClass($page_name, $current_page)
 {
     if ($current_page == $page_name) {
@@ -27,7 +31,7 @@ function getNavClass($page_name, $current_page)
 
             <div class="flex-shrink-0 flex items-center">
                 <a href="index.php">
-                    <img id="nav-logo" class="w-auto transition-all duration-300" src="/assets/img/logo-ghania.png"
+                    <img id="nav-logo" class="w-auto transition-all duration-300" src="<?= BASE_URL ?>assets/img/logo-ghania.png"
                         alt="Ghania Creative" style="height: 55px; filter: brightness(0) invert(1);">
                 </a>
             </div>
@@ -54,16 +58,19 @@ function getNavClass($page_name, $current_page)
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
                         </svg>
                     </button>
-                    <div
-                        class="absolute left-0 mt-2 w-56 bg-white rounded-md shadow-lg py-1 hidden group-hover:block ring-1 ring-black ring-opacity-5 border-t-4 border-ghania-orange text-gray-800">
-                        <a href="service.php?slug=web-dev"
-                            class="block px-4 py-2 text-sm hover:bg-orange-50 hover:text-ghania-orange">Website
-                            Development</a>
-                        <a href="service.php?slug=mobile-apps"
-                            class="block px-4 py-2 text-sm hover:bg-orange-50 hover:text-ghania-orange">Mobile Apps</a>
-                        <a href="service.php?slug=social-media"
-                            class="block px-4 py-2 text-sm hover:bg-orange-50 hover:text-ghania-orange">Social Media
-                            Mgmt</a>
+                    <div class="absolute left-0 top-full pt-2 w-56 hidden group-hover:block z-50">
+                        <div class="bg-white rounded-md shadow-lg py-1 ring-1 ring-black ring-opacity-5 border-t-4 border-ghania-orange text-gray-800">
+                            <?php
+                            $nav_services = $db->table('services')->select('title_en, title_id, slug')->limit(5)->get();
+                            foreach ($nav_services as $ns):
+                                $ns_title = ($lang_code == 'en' && !empty($ns['title_en'])) ? $ns['title_en'] : $ns['title_id'];
+                            ?>
+                            <a href="service.php?slug=<?= $ns['slug'] ?>"
+                                class="block px-4 py-2 text-sm hover:bg-orange-50 hover:text-ghania-orange">
+                                <?= $ns_title ?>
+                            </a>
+                            <?php endforeach; ?>
+                        </div>
                     </div>
                 </div>
 
@@ -128,9 +135,6 @@ function getNavClass($page_name, $current_page)
 <script>
 const navbar = document.getElementById('navbar');
 const navLinks = document.querySelectorAll('.nav-link:not(.active-nav)');
-
-// NOTE: Saya hapus variabel langLinks & divider karena sudah diganti gambar (tidak perlu diubah warnanya oleh JS)
-
 const navLogo = document.getElementById('nav-logo');
 const mobileMenuBtn = document.getElementById('mobile-menu-btn');
 const menu = document.getElementById('mobile-menu');
@@ -139,11 +143,9 @@ function updateNavbar() {
     const isMenuOpen = !menu.classList.contains('hidden');
 
     if (window.scrollY > 50 || isMenuOpen) {
-        // STATE SCROLL DOWN (WHITE BG)
         navbar.classList.remove('bg-transparent', 'py-2');
         navbar.classList.add('bg-white/95', 'backdrop-blur-md', 'shadow-sm', 'py-0');
 
-        // Link biasa jadi Hitam
         navLinks.forEach(link => {
             link.classList.remove('text-white');
             link.classList.add('text-ghania-dark');
@@ -152,11 +154,9 @@ function updateNavbar() {
         navLogo.style.filter = "none";
 
     } else {
-        // STATE TOP (TRANSPARENT)
         navbar.classList.add('bg-transparent', 'py-2');
         navbar.classList.remove('bg-white/95', 'backdrop-blur-md', 'shadow-sm', 'py-0');
 
-        // Link biasa jadi Putih
         navLinks.forEach(link => {
             link.classList.add('text-white');
             link.classList.remove('text-ghania-dark');

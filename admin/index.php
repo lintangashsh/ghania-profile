@@ -1,7 +1,9 @@
 <?php
+/**
+ * @var Database $db
+ */
 session_start();
 
-// --- 1. KEAMANAN: SESSION TIMEOUT (30 Menit) ---
 $timeout_duration = 1800;
 if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) > $timeout_duration) {
     session_unset();
@@ -11,7 +13,6 @@ if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) >
 }
 $_SESSION['last_activity'] = time();
 
-// Cek Login
 if (!isset($_SESSION['admin_logged_in'])) {
     header("Location: login.php");
     exit();
@@ -19,33 +20,23 @@ if (!isset($_SESSION['admin_logged_in'])) {
 
 require '../config/database.php';
 
-// --- 2. LOGIKA DATA DASHBOARD ---
+$total_views_home = $db->table('visitor_logs')->where('page_type', 'home')->count();
+$total_views_art = (int) $db->table('articles')->select('SUM(views) as total')->value('total');
 
-// A. Statistik Kartu Utama
-$q_home = $conn->query("SELECT COUNT(*) as total FROM visitor_logs WHERE page_type='home'");
-$total_views_home = $q_home ? $q_home->fetch_assoc()['total'] : 0;
+$top_article = $db->table('articles')->orderBy('views', 'DESC')->first();
+$top_service = $db->table('services')->orderBy('views', 'DESC')->first();
 
-$q_art_views = $conn->query("SELECT SUM(views) as total FROM articles");
-$total_views_art = $q_art_views ? $q_art_views->fetch_assoc()['total'] : 0;
-
-$top_article = $conn->query("SELECT title_id, views FROM articles ORDER BY views DESC LIMIT 1")->fetch_assoc();
-$top_service = $conn->query("SELECT title_id, views FROM services ORDER BY views DESC LIMIT 1")->fetch_assoc();
-
-// B. Data Grafik Traffic (7 Hari Terakhir)
 $traffic_labels = [];
 $traffic_data = [];
 for ($i = 6; $i >= 0; $i--) {
     $date = date('Y-m-d', strtotime("-$i days"));
     $traffic_labels[] = date('d M', strtotime($date));
-    $query_day = "SELECT COUNT(*) as total FROM visitor_logs WHERE DATE(access_time) = '$date'";
-    $res_day = $conn->query($query_day);
-    $traffic_data[] = $res_day ? $res_day->fetch_assoc()['total'] : 0;
+    $traffic_data[] = $db->table('visitor_logs')->whereRaw("DATE(access_time) = ?", [$date])->count();
 }
 
-// C. Data Pie Chart
-$comp_home = $conn->query("SELECT COUNT(*) as total FROM visitor_logs WHERE page_type='home'")->fetch_assoc()['total'];
-$comp_article = $conn->query("SELECT COUNT(*) as total FROM visitor_logs WHERE page_type='article'")->fetch_assoc()['total'];
-$comp_service = $conn->query("SELECT COUNT(*) as total FROM visitor_logs WHERE page_type='service'")->fetch_assoc()['total'];
+$comp_home = $db->table('visitor_logs')->where('page_type', 'home')->count();
+$comp_article = $db->table('visitor_logs')->where('page_type', 'article')->count();
+$comp_service = $db->table('visitor_logs')->where('page_type', 'service')->count();
 
 $total_all = $comp_home + $comp_article + $comp_service;
 if ($total_all == 0) {
@@ -62,25 +53,10 @@ $page_title = "Dashboard Utama";
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard - Admin Ghania</title>
-    <link rel="icon" type="image/png" href="/assets/img/ghania-3d.png">
-    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="icon" type="image/png" href="<?= BASE_URL ?>assets/img/ghania-3d.png">
+    <link href="<?= BASE_URL ?>assets/css/style.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
         rel="stylesheet">
-    <script>
-    tailwind.config = {
-        theme: {
-            extend: {
-                colors: {
-                    'ghania-orange': '#FF6600',
-                    'ghania-dark': '#111827'
-                },
-                fontFamily: {
-                    'sans': ['Poppins', 'sans-serif']
-                }
-            }
-        }
-    }
-    </script>
 </head>
 
 <body class="bg-gray-100 font-sans antialiased text-gray-800">
@@ -235,9 +211,9 @@ $page_title = "Dashboard Utama";
                                 </thead>
                                 <tbody class="divide-y divide-gray-100 text-sm">
                                     <?php
-                                    $top_articles = $conn->query("SELECT title_id, views FROM articles ORDER BY views DESC LIMIT 5");
-                                    if ($top_articles && $top_articles->num_rows > 0):
-                                        while ($art = $top_articles->fetch_assoc()):
+                                    $top_articles = $db->table('articles')->orderBy('views', 'DESC')->limit(5)->get();
+                                    if (count($top_articles) > 0):
+                                        foreach ($top_articles as $art):
                                     ?>
                                     <tr class="hover:bg-orange-50 transition">
                                         <td class="px-6 py-3 font-medium text-gray-800 truncate max-w-xs"
@@ -251,7 +227,7 @@ $page_title = "Dashboard Utama";
                                             </span>
                                         </td>
                                     </tr>
-                                    <?php endwhile;
+                                    <?php endforeach;
                                     else: ?>
                                     <tr>
                                         <td colspan="2" class="px-6 py-8 text-center text-gray-400 italic">Belum ada
@@ -279,10 +255,9 @@ $page_title = "Dashboard Utama";
                                 </thead>
                                 <tbody class="divide-y divide-gray-100 text-sm">
                                     <?php
-                                    // Query Top 5 Services (Dinamis: kalau layanan nambah, ini auto update)
-                                    $top_services_list = $conn->query("SELECT title_id, views FROM services ORDER BY views DESC LIMIT 5");
-                                    if ($top_services_list && $top_services_list->num_rows > 0):
-                                        while ($srv = $top_services_list->fetch_assoc()):
+                                    $top_services_list = $db->table('services')->orderBy('views', 'DESC')->limit(5)->get();
+                                    if (count($top_services_list) > 0):
+                                        foreach ($top_services_list as $srv):
                                     ?>
                                     <tr class="hover:bg-purple-50 transition">
                                         <td class="px-6 py-3 font-medium text-gray-800 truncate max-w-xs">
@@ -295,7 +270,7 @@ $page_title = "Dashboard Utama";
                                             </span>
                                         </td>
                                     </tr>
-                                    <?php endwhile;
+                                    <?php endforeach;
                                     else: ?>
                                     <tr>
                                         <td colspan="2" class="px-6 py-8 text-center text-gray-400 italic">Belum ada
@@ -315,7 +290,6 @@ $page_title = "Dashboard Utama";
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
-    // 1. CONFIG GRAFIK LINE
     const ctxTraffic = document.getElementById('trafficChart').getContext('2d');
     const gradient = ctxTraffic.createLinearGradient(0, 0, 0, 400);
     gradient.addColorStop(0, 'rgba(255, 102, 0, 0.2)');
@@ -368,7 +342,6 @@ $page_title = "Dashboard Utama";
         }
     });
 
-    // 2. CONFIG GRAFIK DOUGHNUT
     const ctxDist = document.getElementById('distributionChart').getContext('2d');
     new Chart(ctxDist, {
         type: 'doughnut',

@@ -13,22 +13,15 @@ if (isset($_GET['id'])) {
     $id = $_GET['id'];
 
     // 1. Ambil info gambar dulu sebelum dihapus
-    $stmt = $conn->prepare("SELECT thumbnail FROM services WHERE id = ?");
-    $stmt->bind_param("i", $id);
-    $stmt->execute();
-    $result = $stmt->get_result();
-    $data = $result->fetch_assoc();
+    $data = $db->table('services')->select('thumbnail')->where('id', $id)->first();
 
     // 2. Hapus Data dari Database
-    $stmt_del = $conn->prepare("DELETE FROM services WHERE id = ?");
-    $stmt_del->bind_param("i", $id);
-
-    if ($stmt_del->execute()) {
+    if ($db->execute("DELETE FROM services WHERE id = ?", [$id])) {
         // 3. Jika Sukses Hapus DB, Hapus File Gambarnya Juga (Clean Up)
         if ($data && !empty($data['thumbnail'])) {
             $file_path = "../../" . $data['thumbnail'];
             if (file_exists($file_path)) {
-                unlink($file_path); // Delete file fisik
+                unlink($file_path);
             }
         }
 

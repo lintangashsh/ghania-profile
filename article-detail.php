@@ -4,27 +4,22 @@ require 'config/lang.php';
 
 $slug = isset($_GET['slug']) ? $_GET['slug'] : '';
 
-// Ambil Data
-$stmt = $conn->prepare("SELECT a.*, u.name as author_name FROM articles a LEFT JOIN users u ON a.author_id = u.id WHERE a.slug = ?");
-$stmt->bind_param("s", $slug);
-$stmt->execute();
-$article = $stmt->get_result()->fetch_assoc();
+$article = $db->table('articles a')
+    ->select('a.*, u.name as author_name')
+    ->join('users u', 'a.author_id', '=', 'u.id')
+    ->where('a.slug', $slug)
+    ->first();
 
 if (!$article) {
     header("Location: index.php");
     exit();
 }
 
-// === [NEW] LOGIC TRAFFIC & TRACKER ===
-// 1. Update Counter di Tabel Articles
-$conn->query("UPDATE articles SET views = views + 1 WHERE id = " . $article['id']);
+$db->execute("UPDATE articles SET views = views + 1 WHERE id = ?", [$article['id']]);
 
-// 2. Catat Log Pengunjung ke Tabel visitor_logs (Untuk Dashboard)
 require_once 'config/tracker.php';
-record_visit($conn, 'article', $article['title_id']);
-// =====================================
+record_visit($db, 'article', $article['title_id']);
 
-// Logic Bahasa
 if ($lang_code == 'en') {
     $raw_title = !empty($article['title_en']) ? $article['title_en'] : $article['title_id'];
     $raw_content = !empty($article['content_en']) ? $article['content_en'] : $article['content_id'];
@@ -33,12 +28,10 @@ if ($lang_code == 'en') {
     $raw_content = $article['content_id'];
 }
 
-// === FIX CLEANING DATA ===
 $display_title = stripslashes($raw_title);
 $clean_content = stripslashes($raw_content);
 $clean_content = str_replace(array('\r\n', '\r', '\n', '\\r\\n'), '<br>', $clean_content);
 
-// Setup SEO
 $page_title = $display_title;
 $meta_desc  = $article['meta_description'];
 $meta_keys  = $article['meta_keywords'];
@@ -80,13 +73,13 @@ include 'includes/navbar.php';
             </article>
 
             <?php if ($article['meta_keywords']): ?>
-            <div class="mt-12 pt-8 border-t">
-                <div class="flex flex-wrap gap-2">
-                    <?php foreach (explode(',', $article['meta_keywords']) as $tag): ?>
-                    <span class="bg-gray-100 text-gray-600 px-3 py-1 rounded-full text-xs">#<?= trim($tag) ?></span>
-                    <?php endforeach; ?>
+                <div class="mt-12 pt-8 border-t">
+                    <div class="flex flex-wrap gap-2">
+                        <?php foreach (explode(',', $article['meta_keywords']) as $tag): ?>
+                            <span class="bg-gray-100 text-gray-600 px-3 py-1 rounded-full text-xs">#<?= trim($tag) ?></span>
+                        <?php endforeach; ?>
+                    </div>
                 </div>
-            </div>
             <?php endif; ?>
         </div>
     </div>
@@ -95,74 +88,74 @@ include 'includes/navbar.php';
 <?php include 'includes/footer.php'; ?>
 
 <script>
-window.onscroll = function() {
-    var winScroll = document.body.scrollTop || document.documentElement.scrollTop;
-    var height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-    document.getElementById("progress-bar").style.width = (winScroll / height) * 100 + "%";
-};
+    window.onscroll = function() {
+        var winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+        var height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+        document.getElementById("progress-bar").style.width = (winScroll / height) * 100 + "%";
+    };
 </script>
 
 <style>
-article,
-article * {
-    font-family: 'Poppins', sans-serif !important;
-}
+    article,
+    article * {
+        font-family: 'Poppins', sans-serif !important;
+    }
 
-article h1,
-article h2,
-article h3,
-article h4 {
-    color: #111;
-    font-weight: 700;
-    margin-top: 1.5em;
-    margin-bottom: 0.5em;
-}
+    article h1,
+    article h2,
+    article h3,
+    article h4 {
+        color: #111;
+        font-weight: 700;
+        margin-top: 1.5em;
+        margin-bottom: 0.5em;
+    }
 
-article p {
-    margin-bottom: 1.5em;
-    line-height: 1.8;
-    color: #374151;
-}
+    article p {
+        margin-bottom: 1.5em;
+        line-height: 1.8;
+        color: #374151;
+    }
 
-article ul {
-    display: block;
-    list-style-type: disc !important;
-    padding-left: 2em !important;
-    margin-bottom: 1.5em;
-}
+    article ul {
+        display: block;
+        list-style-type: disc !important;
+        padding-left: 2em !important;
+        margin-bottom: 1.5em;
+    }
 
-article ol {
-    display: block;
-    list-style-type: decimal !important;
-    padding-left: 2em !important;
-    margin-bottom: 1.5em;
-}
+    article ol {
+        display: block;
+        list-style-type: decimal !important;
+        padding-left: 2em !important;
+        margin-bottom: 1.5em;
+    }
 
-article li {
-    display: list-item;
-    margin-bottom: 0.5em;
-    padding-left: 0.5em;
-}
+    article li {
+        display: list-item;
+        margin-bottom: 0.5em;
+        padding-left: 0.5em;
+    }
 
-article img {
-    border-radius: 0.75rem;
-    margin: 2em 0;
-    width: 100%;
-    height: auto;
-    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-}
+    article img {
+        border-radius: 0.75rem;
+        margin: 2em 0;
+        width: 100%;
+        height: auto;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    }
 
-article blockquote {
-    border-left: 4px solid #F05A28;
-    background: #FFF7F0;
-    padding: 1em 1.5em;
-    font-style: italic;
-    color: #555;
-    margin-bottom: 1.5em;
-}
+    article blockquote {
+        border-left: 4px solid #F05A28;
+        background: #FFF7F0;
+        padding: 1em 1.5em;
+        font-style: italic;
+        color: #555;
+        margin-bottom: 1.5em;
+    }
 
-article a {
-    color: #F05A28;
-    text-decoration: underline;
-}
+    article a {
+        color: #F05A28;
+        text-decoration: underline;
+    }
 </style>
