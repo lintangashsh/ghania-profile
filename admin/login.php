@@ -80,7 +80,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             </div>
 
             <div class="mb-6">
-                <label class="block text-gray-300 text-sm font-bold mb-2">Password</label>
+                <div class="flex justify-between items-center mb-2">
+                    <label class="block text-gray-300 text-sm font-bold">Password</label>
+                    <a href="forgot_password.php" class="text-sm text-ghania-orange hover:text-orange-400 transition">Lupa Password?</a>
+                </div>
                 <div class="relative">
                     <input type="password" name="password" id="passwordInput" required placeholder="••••••"
                         class="w-full px-4 py-2 bg-gray-800 border border-gray-700 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-ghania-orange focus:border-transparent transition duration-200 pr-10 placeholder-gray-500">
